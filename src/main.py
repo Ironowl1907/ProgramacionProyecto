@@ -26,6 +26,7 @@ mainPlayer = player.Player(
     int(conf.WIDTH/2), int(conf.HEIGHT/2), projectilesGroup)
 
 constr.spawnEnemy(enemiesGroup, projectilesGroup, mainPlayer)
+constr.spawnEnemy(enemiesGroup, projectilesGroup, mainPlayer)
 
 # Main game loop
 clock = pygame.time.Clock()
@@ -57,7 +58,8 @@ while running:
     mainPlayer.draw(screen)
     for uenemy in enemiesGroup:
         uenemy.draw(screen)
-    projectilesGroup.draw(screen)
+    for projectile in projectilesGroup:
+        projectile.draw(screen)
 
     # Update the display
     pygame.display.flip()

@@ -59,6 +59,8 @@ class Enemy(pygame.sprite.Sprite):
             0, min(self.position.y, conf.HEIGHT - self.rect.height))
 
     def draw(self, surface):
+        if conf.SHOWHITBOX:
+            pygame.draw.rect(surface, conf.RED, self.rect)
         rotated_image = pygame.transform.rotate(
             self.image, -self.rotatingAngle)
         rotated_rect = rotated_image.get_rect(

@@ -21,8 +21,10 @@ class Player(pygame.sprite.Sprite):
         self.proyectileGoup = proyectileGroup
         self.lastShot = 0
         self.rotatingAngle = 0
+        self.invencibleTime = conf.INVENCIBLETIME
 
     def update(self, deltaTime: float):
+        self.invencibleTime -= deltaTime
         self.lastShot += deltaTime
         self._apply_deceleration(deltaTime)
         self._update_position()
@@ -43,6 +45,8 @@ class Player(pygame.sprite.Sprite):
             0, min(self.position.y, conf.HEIGHT - self.rect.height))
 
     def draw(self, surface):
+        if conf.SHOWHITBOX:
+            pygame.draw.rect(surface, conf.BLUE, self.rect)
         rotated_image = pygame.transform.rotate(
             self.image, -self.rotatingAngle)
         rotated_rect = rotated_image.get_rect(

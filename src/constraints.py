@@ -14,7 +14,7 @@ def checkCollisions(mainPlayer: player.Player, enemyGroup: Group, projectileGrou
                     print("Collision")
 
     for uenemy in enemyGroup:
-        if mainPlayer.rect.colliderect(uenemy.rect):
+        if mainPlayer.rect.colliderect(uenemy.rect) and mainPlayer.invencibleTime <= 0:
             print("Game Over")
             exit()
 
@@ -23,19 +23,30 @@ def checkCollisions(mainPlayer: player.Player, enemyGroup: Group, projectileGrou
             if projectile.rect.colliderect(uenemy.rect):
                 print("Enemy killed")
                 enemyGroup.remove(uenemy)
+                projectileGroup.remove(projectile)
 
 
 def spawnEnemy(enemyGroup: Group, projectileGroup: Group, mainPlayer: player.Player):
     newEnemy = enemy.Enemy(projectileGroup, 0, 0)
-    position = pygame.Vector2(0)
-    overlappping = True
-    while overlappping:
-        overlappping = False
-        position.x = randint(0, conf.WIDTH)
-        position.y = randint(0, conf.HEIGHT)
+    position = pygame.Vector2(0, 0)  # More explicit initialization
+    overlapping = True
+
+    while overlapping:
+        print("Checking new coord")
+        overlapping = False
+
+        position.x = randint(0, conf.WIDTH - newEnemy.rect.width)
+        position.y = randint(0, conf.HEIGHT - newEnemy.rect.height)
+
         newEnemy.position = position
-        for uememy in enemyGroup:
-            if newEnemy.rect.colliderect(uememy) or newEnemy.rect.colliderect(mainPlayer.rect):
-                overlappping = True
+        # Make sure the rect is updated
+        newEnemy.rect.topleft = (position.x, position.y)
+
+        for uenemy in enemyGroup:
+            if newEnemy.rect.colliderect(uenemy.rect) or newEnemy.rect.colliderect(mainPlayer.rect):
+                overlapping = True
+                print(f"Failed {position}")
                 break
-        enemyGroup.add(newEnemy)
+
+    print(f"Enemy added: {newEnemy.position}")
+    enemyGroup.add(newEnemy)
