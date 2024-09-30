@@ -46,10 +46,14 @@ class Enemy(pygame.sprite.Sprite):
             self.randMove = Vector2(
                 rand.random(), rand.random()) * conf.RANDMULTILIER
 
-        self.rotatingAngle = math.degrees(
-            math.atan2(self.direction.y, self.direction.x))
+        if not self.killed:
+            self.rotatingAngle = math.degrees(
+                math.atan2(self.direction.y, self.direction.x))
 
-        self.rotatingAngle -= 90
+            self.rotatingAngle -= 90
+
+        else:
+            self.rotatingAngle += conf.KILLEDROTATIONSPEED
 
         self.lastShot += deltaTime
         self._update_position()
@@ -82,14 +86,13 @@ class Enemy(pygame.sprite.Sprite):
             rotated_rect = rotated_image.get_rect(
                 center=self.rect.center)
 
-            surface.blit(rotated_image, rotated_rect)
         else:
             rotated_image = pygame.transform.rotate(
                 self.killed_image, -self.rotatingAngle)
             rotated_rect = rotated_image.get_rect(
                 center=self.rect.center)
 
-            surface.blit(rotated_image, rotated_rect)
+        surface.blit(rotated_image, rotated_rect)
 
     def kill(self):
         self.killed = True
