@@ -1,11 +1,12 @@
 import pygame
+from pygame.math import Vector2
 import conf as conf
 
 direction = pygame.Vector2(0, -1)
 
 
 class Projectile(pygame.sprite.Sprite):
-    def __init__(self, position, direction, rotation: int, harmPlayer: bool = False):
+    def __init__(self, position: Vector2, direction, rotation: int, harmPlayer: bool = False):
         super().__init__()
         self.harmsPlayer = harmPlayer
         if not harmPlayer:
@@ -14,8 +15,7 @@ class Projectile(pygame.sprite.Sprite):
             self.original_image = pygame.image.load("../res/Enemy_beam.png")
 
         self.original_image = pygame.transform.scale(
-            self.original_image, (50, 50))  # Adjust size if necessary
-
+            self.original_image, (20, 30))
         self.image = pygame.transform.rotate(self.original_image, -rotation)
         self.rect = self.image.get_rect(center=position)
 

@@ -16,7 +16,7 @@ def checkCollisions(mainPlayer: player.Player, enemyGroup: Group,
 
     for uenemy in enemyGroup:
         if mainPlayer.rect.colliderect(uenemy.rect) and \
-                mainPlayer.invencibleTime <= 0:
+                mainPlayer.invencibleTime >= 0:
             print("Game Over")
             exit()
 
@@ -28,7 +28,7 @@ def checkCollisions(mainPlayer: player.Player, enemyGroup: Group,
                 projectileGroup.remove(projectile)
             if projectile.rect.colliderect(mainPlayer.rect) and \
                     projectile.harmsPlayer and \
-                    mainPlayer.invencibleTime < 0:
+                    mainPlayer.invencibleTime >= 0:
                 print("Game Over")
                 exit()
 
