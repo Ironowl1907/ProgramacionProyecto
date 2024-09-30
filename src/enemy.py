@@ -22,6 +22,12 @@ class Enemy(pygame.sprite.Sprite):
         self.original_image = pygame.image.load("../res/Enemy.png")
         self.image = pygame.transform.scale(
             self.original_image, (50, 50))
+
+        self.killed_original_image = pygame.image.load(
+            "../res/Destoyed_Enemy.png")
+        self.killed_image = pygame.transform.scale(
+            self.killed_original_image, (50, 50))
+
         self.rect = self.image.get_rect(center=self.position)
 
         self.proyectileGoup = proyectileGroup
@@ -29,6 +35,8 @@ class Enemy(pygame.sprite.Sprite):
 
         self.randMovCooldown = 0
         self.randMove = Vector2(0)
+
+        self.killed = False
 
     def update(self, deltaTime: float, playerPosition: Vector2):
         self.direction = playerPosition - self.position
@@ -48,25 +56,43 @@ class Enemy(pygame.sprite.Sprite):
         self._check_boundaries()
 
     def _update_position(self):
-        self.position += self.direction.normalize() * self.speed
-        self.position += self.randMove
+        if not self.killed:
+            self.position += self.direction.normalize() * self.speed
+            self.position += self.randMove
+        else:
+            self.position += Vector2(0, 1) * self.speed
+            self.position += self.randMove
+
         self.rect.center = (int(self.position.x), int(self.position.y))
 
     def _check_boundaries(self):
-        self.position.x = max(
-            0, min(self.position.x, conf.WIDTH - self.rect.width))
-        self.position.y = max(
-            0, min(self.position.y, conf.HEIGHT - self.rect.height))
+        if not self.killed:
+            self.position.x = max(
+                0, min(self.position.x, conf.WIDTH - self.rect.width))
+            self.position.y = max(
+                0, min(self.position.y, conf.HEIGHT - self.rect.height))
 
     def draw(self, surface):
         if conf.SHOWHITBOX:
             pygame.draw.rect(surface, conf.RED, self.rect)
-        rotated_image = pygame.transform.rotate(
-            self.image, -self.rotatingAngle)
-        rotated_rect = rotated_image.get_rect(
-            center=self.rect.center)
 
-        surface.blit(rotated_image, rotated_rect)
+        if not self.killed:
+            rotated_image = pygame.transform.rotate(
+                self.image, -self.rotatingAngle)
+            rotated_rect = rotated_image.get_rect(
+                center=self.rect.center)
+
+            surface.blit(rotated_image, rotated_rect)
+        else:
+            rotated_image = pygame.transform.rotate(
+                self.killed_image, -self.rotatingAngle)
+            rotated_rect = rotated_image.get_rect(
+                center=self.rect.center)
+
+            surface.blit(rotated_image, rotated_rect)
+
+    def kill(self):
+        self.killed = True
 
     def shoot(self, projectileGroup: Group):
         if self.lastShot >= conf.PROJECTILE_COOLDOWN:

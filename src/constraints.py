@@ -22,7 +22,7 @@ def checkCollisions(mainPlayer: player.Player, enemyGroup: Group, projectileGrou
         for uenemy in enemyGroup:
             if projectile.rect.colliderect(uenemy.rect):
                 print("Enemy killed")
-                enemyGroup.remove(uenemy)
+                uenemy.kill()
                 projectileGroup.remove(projectile)
 
 
