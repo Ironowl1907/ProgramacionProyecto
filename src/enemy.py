@@ -31,7 +31,7 @@ class Enemy(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(center=self.position)
 
         self.proyectileGoup = proyectileGroup
-        self.lastShot = 0
+        self.shootCooldown = 0
 
         self.randMovCooldown = 0
         self.randMove = Vector2(0)
@@ -42,6 +42,7 @@ class Enemy(pygame.sprite.Sprite):
     def update(self, deltaTime: float, playerPosition: Vector2, enemyGroup: Group):
         self.direction = playerPosition - self.position
         self.randMovCooldown += deltaTime
+        self.shootCooldown += deltaTime
         if self.randMovCooldown >= conf.RANDCOOLDOWN:
             self.randMovCooldown = 0
             self.randMove = Vector2(
@@ -60,7 +61,10 @@ class Enemy(pygame.sprite.Sprite):
                 print("Enemy despawned")
             self.rotatingAngle += conf.KILLEDROTATIONSPEED
 
-        self.lastShot += deltaTime
+        if self.randMovCooldown >= conf.ENEMYSHOOTCOOLDOWN and \
+                rand.randint(1, conf.ENEMYSHOOTRAND) == 1:
+            self.shootCooldown = 0
+            self.shoot(self.proyectileGoup)
         self._update_position()
         self._check_boundaries()
 
@@ -103,13 +107,10 @@ class Enemy(pygame.sprite.Sprite):
         self.killed = True
 
     def shoot(self, projectileGroup: Group):
-        if self.lastShot >= conf.PROJECTILE_COOLDOWN:
-            direction = pygame.Vector2(0, -1).rotate(self.rotatingAngle)
+        direction = pygame.Vector2(0, 1).rotate(self.rotatingAngle)
 
-            front_position = self.position + direction * (self.rect.height / 2)
+        front_position = self.position + direction * (self.rect.height / 2)
 
-            projectile = proy.Projectile(
-                front_position, direction, int(self.rotatingAngle))
-            projectileGroup.add(projectile)
-
-            self.lastShot = 0
+        projectile = proy.Projectile(
+            front_position, direction, int(self.rotatingAngle), True)
+        projectileGroup.add(projectile)

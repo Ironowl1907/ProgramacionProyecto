@@ -24,7 +24,6 @@ class Player(pygame.sprite.Sprite):
         self.invencibleTime = conf.INVENCIBLETIME
 
     def update(self, deltaTime: float):
-        self.invencibleTime -= deltaTime
         self.lastShot += deltaTime
         self._apply_deceleration(deltaTime)
         self._update_position()
