@@ -26,7 +26,6 @@ mainPlayer = player.Player(
     int(conf.WIDTH/2), int(conf.HEIGHT/2), projectilesGroup)
 
 constr.spawnEnemy(enemiesGroup, projectilesGroup, mainPlayer)
-constr.spawnEnemy(enemiesGroup, projectilesGroup, mainPlayer)
 
 # Main game loop
 clock = pygame.time.Clock()
@@ -48,7 +47,7 @@ while running:
     for projectile in projectilesGroup:
         projectile.update()
     for uenemy in enemiesGroup:
-        uenemy.update(deltaTime, mainPlayer.position)
+        uenemy.update(deltaTime, mainPlayer.position, enemiesGroup)
     mainPlayer.update(deltaTime)
 
     constr.checkCollisions(mainPlayer, enemiesGroup, projectilesGroup)

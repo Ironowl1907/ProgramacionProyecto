@@ -37,8 +37,9 @@ class Enemy(pygame.sprite.Sprite):
         self.randMove = Vector2(0)
 
         self.killed = False
+        self.killAnimationTime = conf.KILLANIMATIONTIME
 
-    def update(self, deltaTime: float, playerPosition: Vector2):
+    def update(self, deltaTime: float, playerPosition: Vector2, enemyGroup: Group):
         self.direction = playerPosition - self.position
         self.randMovCooldown += deltaTime
         if self.randMovCooldown >= conf.RANDCOOLDOWN:
@@ -53,6 +54,10 @@ class Enemy(pygame.sprite.Sprite):
             self.rotatingAngle -= 90
 
         else:
+            self.killAnimationTime -= deltaTime
+            if self.killAnimationTime <= 0:
+                enemyGroup.remove(self)
+                print("Enemy despawned")
             self.rotatingAngle += conf.KILLEDROTATIONSPEED
 
         self.lastShot += deltaTime

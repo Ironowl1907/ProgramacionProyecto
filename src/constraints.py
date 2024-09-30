@@ -1,5 +1,5 @@
-from random import randint, random
 import pygame
+from random import randint
 from pygame.sprite import Group
 import player as player
 import conf as conf
