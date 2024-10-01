@@ -1,4 +1,6 @@
 # Constants
+from pygame.font import FontType
+
 WIDTH, HEIGHT = 800, 600
 FPS = 60
 PLAYER_SPEED = 5
