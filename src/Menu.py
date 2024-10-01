@@ -1,6 +1,7 @@
 import pygame
 import pygame_menu
 import sys
+from src import main
 
 # Constants
 WIDTH, HEIGHT = 800, 600
@@ -12,7 +13,7 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Game Tips")
 
 # Load Minecraft Font
-font_path = r"..\res\Minecraftia-Regular.ttf"
+font_path = r"../res/Fonts/Minecraftia-Regular.ttf"
 minecraft_font = pygame.font.Font(font_path, 36)  # Main font for menu and upgrades
 tip_font = pygame.font.Font(font_path, 16)  # Smaller font for tips
 
@@ -32,9 +33,9 @@ tips = [
 
 # Sample list of upgrades (replace these with your own)
 upgrades = [
-    {"name": "Eco-friendly packaging options", "cost": 10},
-    {"name": "Improved recycling bins", "cost": 15},
-    {"name": "Community workshops", "cost": 20},
+    {"name": "Laser Eco-friendly", "cost": 10},
+    {"name": "Reduccion de Carbono 1", "cost": 15},
+    {"name": "", "cost": 20},
 ]
 
 # Game variables
@@ -129,26 +130,6 @@ def upgrade_menu():
 
 
 # Main game loop function
-def main_game_loop():
-    global points
-
-    # Simulate gaining points (for demonstration purposes)
-    points += 5  # This would typically happen through gameplay events
-
-    while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_TAB:  # Press Tab to open the upgrade menu
-                    upgrade_menu()
-
-        # Update screen with current points (optional)
-        screen.fill((0, 0, 0))  # Clear screen with black background
-        point_surface = minecraft_font.render(f"Puntos: {points}", True, (255, 255, 255))
-        screen.blit(point_surface, (10, 10))
-        pygame.display.flip()
 
 
 def start_menu():
@@ -167,7 +148,7 @@ def start_menu():
 
     menu.add.button('Tips de reciclaje!', show_tips_with_timer)
 
-    menu.add.button('Empezar juego', main_game_loop)  # Start the main game loop
+    menu.add.button('Empezar juego', main.mainGame)  # Start the main game loop
 
     menu.add.button('Mejoras', upgrade_menu)
 
