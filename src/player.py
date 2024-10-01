@@ -57,10 +57,11 @@ class Player(pygame.sprite.Sprite):
         if self.lastShot >= conf.PROJECTILE_COOLDOWN:
             direction = pygame.Vector2(0, -1).rotate(self.rotatingAngle)
 
-            front_position = self.position + direction * (self.rect.height / 2)
+            front_position = self.position + \
+                direction * ((self.rect.height / 2) + 30)
 
             projectile = proy.Projectile(
-                front_position, direction, self.rotatingAngle, proy.ProjectileType.SAW)
+                front_position, direction, self.rotatingAngle, proy.ProjectileType.BASIC)
             projectileGroup.add(projectile)
 
             self.lastShot = 0

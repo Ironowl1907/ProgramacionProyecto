@@ -32,7 +32,8 @@ def checkCollisions(mainPlayer: player.Player, enemyGroup: Group,
                     uenemy.kill()
                     projectileGroup.remove(projectile)
             if projectile.rect.colliderect(mainPlayer.rect) and \
-                    projectile.projType == ProjectileType.BASICENEMY:
+                    projectile.projType == ProjectileType.BASICENEMY or \
+                    projectile.projType == ProjectileType.SAW:
                 print("Game Over")
                 exit()
 
