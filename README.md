@@ -35,11 +35,11 @@ To run this project, you need:
 ## Installation
 1. Clone the repository:
     ```bash
-    git clone https://github.com/username/avion-de-basura.git
+    git clone https://github.com/Ironowl1907/ProgramacionProyecto.git
     ```
 2. Navigate to the project directory:
     ```bash
-    cd avion-de-basura
+    cd ProgramacionProyecto
     ```
 
 3. Install the required dependencies:
@@ -66,16 +66,6 @@ python main.py
 - **Enemies**: Enemies will chase the player and attempt to shoot.
 - **Projectiles**: Both player and enemies can shoot projectiles that deal damage upon collision.
 
----
-
-## Contributing
-1. Fork the repository.
-2. Create a new branch for your feature (`git checkout -b feature-name`).
-3. Commit your changes (`git commit -m 'Add new feature'`).
-4. Push to the branch (`git push origin feature-name`).
-5. Open a Pull Request.
-
----
 
 ## License
 This project is licensed under the MIT License.
