@@ -25,13 +25,16 @@ def checkCollisions(mainPlayer: player.Player, enemyGroup: Group,
         for uenemy in enemyGroup:
             if projectile.rect.colliderect(uenemy.rect) and \
                     projectile.projType != ProjectileType.BASICENEMY:
-                uenemy.kill()
-                projectileGroup.remove(projectile)
-                if projectile.rect.colliderect(mainPlayer.rect) and \
-                        projectile.projType != ProjectileType.BASICENEMY and \
-                        mainPlayer.invencibleTime >= 0:
-                    print("Game Over")
-                    exit()
+                if projectile.projType == ProjectileType.SAW:
+                    uenemy.kill()
+                    projectile.randDir()
+                else:
+                    uenemy.kill()
+                    projectileGroup.remove(projectile)
+            if projectile.rect.colliderect(mainPlayer.rect) and \
+                    projectile.projType == ProjectileType.BASICENEMY:
+                print("Game Over")
+                exit()
 
 
 def spawnEnemy(enemyGroup: Group, projectileGroup: Group,

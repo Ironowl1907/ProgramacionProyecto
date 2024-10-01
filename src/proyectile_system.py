@@ -1,3 +1,4 @@
+import random as rand
 import pygame
 from pygame.math import Vector2
 import conf as conf
@@ -50,6 +51,10 @@ class Projectile(pygame.sprite.Sprite):
         if (self.rect.right < 0 or self.rect.left > conf.WIDTH or
                 self.rect.bottom < 0 or self.rect.top > conf.HEIGHT):
             self.kill()
+
+    def randDir(self):
+        ranf = rand.random()
+        self.direction = Vector2(ranf, 1 - ranf)
 
     def draw(self, surface):
         if conf.SHOWHITBOX:

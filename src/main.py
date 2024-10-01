@@ -53,7 +53,7 @@ while running:
     constr.checkCollisions(mainPlayer, enemiesGroup, projectilesGroup)
 
     # Render
-    screen.fill(conf.WHITE)
+    screen.fill(conf.BLACK)
     mainPlayer.draw(screen)
     for uenemy in enemiesGroup:
         uenemy.draw(screen)
