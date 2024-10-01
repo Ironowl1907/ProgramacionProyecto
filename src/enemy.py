@@ -112,5 +112,5 @@ class Enemy(pygame.sprite.Sprite):
         front_position = self.position + direction * (self.rect.height / 2)
 
         projectile = proy.Projectile(
-            front_position, direction, int(self.rotatingAngle), True)
+            front_position, direction, int(self.rotatingAngle), proy.ProjectileType.BASICENEMY)
         projectileGroup.add(projectile)

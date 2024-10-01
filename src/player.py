@@ -5,6 +5,9 @@ import pygame
 
 # Player class
 
+weaponList = [proy.ProjectileType.BASIC,
+              proy.ProjectileType.SAW, proy.ProjectileType.LASER]
+
 
 class Player(pygame.sprite.Sprite):
 
@@ -14,17 +17,34 @@ class Player(pygame.sprite.Sprite):
         self.velocity = pygame.Vector2(0)
 
         self.original_image = pygame.image.load("../res/Player.png")
+        self.original_shield = pygame.image.load("../res/Shield.png")
         self.image = pygame.transform.scale(
-            self.original_image, (50, 50))  # Resize if necessary
+            self.original_image, (50, 50))
+        self.shield = pygame.transform.scale(
+            self.original_shield, (80, 80))
         self.rect = self.image.get_rect(center=self.position)
         self.speed = conf.PLAYER_SPEED
         self.proyectileGoup = proyectileGroup
         self.lastShot = 0
         self.rotatingAngle = 0
+        self.inmortal = True
         self.invencibleTime = conf.INVENCIBLETIME
+
+        self.actualWeapon = 0
+        self.changeWeaponCooldown = 0
+
+    def newWeapon(self):
+        if self.changeWeaponCooldown >= conf.CHANGEWEAPONCOOLDOWN:
+            self.actualWeapon = (self.actualWeapon + 1) % len(weaponList)
+            self.changeWeaponCooldown = 0
+            print(self.actualWeapon)
 
     def update(self, deltaTime: float):
         self.lastShot += deltaTime
+        self.changeWeaponCooldown += deltaTime
+        self.invencibleTime -= deltaTime
+        if self.invencibleTime <= 0:
+            self.inmortal = False
         self._apply_deceleration(deltaTime)
         self._update_position()
         self._check_boundaries()
@@ -46,10 +66,17 @@ class Player(pygame.sprite.Sprite):
     def draw(self, surface):
         if conf.SHOWHITBOX:
             pygame.draw.rect(surface, conf.BLUE, self.rect)
+
         rotated_image = pygame.transform.rotate(
             self.image, -self.rotatingAngle)
-        rotated_rect = rotated_image.get_rect(
-            center=self.rect.center)
+        rotated_rect = rotated_image.get_rect(center=self.rect.center)
+
+        if self.inmortal:
+            rotated_shield = pygame.transform.rotate(
+                self.shield, -self.rotatingAngle)
+            rotated_shield_rect = rotated_shield.get_rect(
+                center=self.rect.center)
+            surface.blit(rotated_shield, rotated_shield_rect)
 
         surface.blit(rotated_image, rotated_rect)
 
@@ -58,10 +85,10 @@ class Player(pygame.sprite.Sprite):
             direction = pygame.Vector2(0, -1).rotate(self.rotatingAngle)
 
             front_position = self.position + \
-                direction * ((self.rect.height / 2) + 30)
+                direction * ((self.rect.height / 2) + 20)
 
             projectile = proy.Projectile(
-                front_position, direction, self.rotatingAngle, proy.ProjectileType.BASIC)
+                front_position, direction, self.rotatingAngle, weaponList[self.actualWeapon])
             projectileGroup.add(projectile)
 
             self.lastShot = 0

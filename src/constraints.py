@@ -17,8 +17,8 @@ def checkCollisions(mainPlayer: player.Player, enemyGroup: Group,
 
     for uenemy in enemyGroup:
         if mainPlayer.rect.colliderect(uenemy.rect) and \
-                mainPlayer.invencibleTime >= 0:
-            print("Game Over")
+                mainPlayer.invencibleTime <= 0 and not mainPlayer.inmortal:
+            print("Game Over: Player crashed with enemy")
             exit()
 
     for projectile in projectileGroup:
@@ -32,9 +32,10 @@ def checkCollisions(mainPlayer: player.Player, enemyGroup: Group,
                     uenemy.kill()
                     projectileGroup.remove(projectile)
             if projectile.rect.colliderect(mainPlayer.rect) and \
-                    projectile.projType == ProjectileType.BASICENEMY or \
-                    projectile.projType == ProjectileType.SAW:
-                print("Game Over")
+                    projectile.projType == ProjectileType.BASICENEMY and not\
+                    mainPlayer.inmortal:
+                print(f"Game Over: Player hit by projectile: {
+                      int(projectile.projType)}")
                 exit()
 
 

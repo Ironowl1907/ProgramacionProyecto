@@ -25,6 +25,9 @@ def getInput(mplayer: player.Player, projectileGroup: Group, deltaTime: float):
     if keys[pygame.K_LEFT]:
         # Rotate left
         mplayer.rotatingAngle -= int(conf.ROTATION_SPEED * deltaTime)
+    if keys[pygame.K_UP]:
+        # Rotate left
+        mplayer.newWeapon()
 
     # Normalize the rotating angle
     if (mplayer.rotatingAngle >= 360):

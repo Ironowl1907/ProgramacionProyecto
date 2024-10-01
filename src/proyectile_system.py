@@ -6,8 +6,8 @@ import conf as conf
 
 class ProjectileType():
     BASIC = 0
-    BASICENEMY = 1
-    SAW = 2
+    BASICENEMY = 3
+    SAW = 1
     LASER = 2
 
 
