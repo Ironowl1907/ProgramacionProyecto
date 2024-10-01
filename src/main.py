@@ -15,50 +15,54 @@ screen = pygame.display.set_mode((conf.WIDTH, conf.HEIGHT))
 pygame.display.set_caption("Avion de basura (que se yo)")
 
 
-# Proyectile list instance
-projectilesGroup = pygame.sprite.Group()
+def mainGame():
+    # Proyectile list instance
+    projectilesGroup = pygame.sprite.Group()
 
-# Enemy list instance
-enemiesGroup = pygame.sprite.Group()
+    # Enemy list instance
+    enemiesGroup = pygame.sprite.Group()
 
-# Player instance
-mainPlayer = player.Player(
-    int(conf.WIDTH/2), int(conf.HEIGHT/2), projectilesGroup)
+    # Player instance
+    mainPlayer = player.Player(
+        int(conf.WIDTH/2), int(conf.HEIGHT/2), projectilesGroup)
 
-constr.spawnEnemy(enemiesGroup, projectilesGroup, mainPlayer)
+    constr.spawnEnemy(enemiesGroup, projectilesGroup, mainPlayer)
 
-# Main game loop
-clock = pygame.time.Clock()
-running = True
+    # Main game loop
+    clock = pygame.time.Clock()
+    running = True
+
+    while running:
+        deltaTime = clock.tick(conf.FPS) / 1000
+        # Handle events
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+        # Handle Input
+        input.getInput(mainPlayer, projectilesGroup, deltaTime)
+
+        # Update
+        for projectile in projectilesGroup:
+            projectile.update()
+        for uenemy in enemiesGroup:
+            uenemy.update(deltaTime, mainPlayer.position, enemiesGroup)
+        mainPlayer.update(deltaTime)
+
+        constr.checkCollisions(mainPlayer, enemiesGroup, projectilesGroup)
+
+        # Render
+        screen.fill(conf.BLACK)
+        mainPlayer.draw(screen)
+        for uenemy in enemiesGroup:
+            uenemy.draw(screen)
+        for projectile in projectilesGroup:
+            projectile.draw(screen)
+
+        # Update the display
+        pygame.display.flip()
 
 
-while running:
-    deltaTime = clock.tick(conf.FPS) / 1000
-    # Handle events
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
-
-    # Handle Input
-    input.getInput(mainPlayer, projectilesGroup, deltaTime)
-
-    # Update
-    for projectile in projectilesGroup:
-        projectile.update()
-    for uenemy in enemiesGroup:
-        uenemy.update(deltaTime, mainPlayer.position, enemiesGroup)
-    mainPlayer.update(deltaTime)
-
-    constr.checkCollisions(mainPlayer, enemiesGroup, projectilesGroup)
-
-    # Render
-    screen.fill(conf.BLACK)
-    mainPlayer.draw(screen)
-    for uenemy in enemiesGroup:
-        uenemy.draw(screen)
-    for projectile in projectilesGroup:
-        projectile.draw(screen)
-
-    # Update the display
-    pygame.display.flip()
+if __name__ == "__main__":
+    mainGame()
