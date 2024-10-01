@@ -7,8 +7,7 @@ This project is a simple 2D game created using Pygame, where the player controls
 2. [Prerequisites](#prerequisites)
 3. [Installation](#installation)
 4. [Usage](#usage)
-5. [Contributing](#contributing)
-6. [License](#license)
+5. [License](#license)
 
 ---
 
