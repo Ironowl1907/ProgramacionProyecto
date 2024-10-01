@@ -17,20 +17,26 @@ class Projectile(pygame.sprite.Sprite):
     def __init__(self, position: Vector2, direction, rotation: int, projType: int):
         super().__init__()
         self.spritePath = ""
+        self.scaleVector = (1, 1)
         match projType:
             case ProjectileType.BASIC:
                 self.spritePath = "../res/Player_beam.png"
+                self.scaleVector = (20, 30)
             case ProjectileType.BASICENEMY:
                 self.spritePath = "../res/Enemy_beam.png"
+                self.scaleVector = (20, 30)
             case ProjectileType.SAW:
                 self.spritePath = "../res/Player_saw.png"
+                self.scaleVector = (50, 50)
             case ProjectileType.LASER:
                 self.spritePath = "../res/Player_beam.png"
 
+        self.rotation = rotation
         self.original_image = pygame.image.load(self.spritePath)
         self.original_image = pygame.transform.scale(
-            self.original_image, (20, 30))
-        self.image = pygame.transform.rotate(self.original_image, -rotation)
+            self.original_image, self.scaleVector)
+        self.image = pygame.transform.rotate(
+            self.original_image, -self.rotation)
         self.rect = self.image.get_rect(center=position)
 
         self.projType = projType
@@ -48,4 +54,9 @@ class Projectile(pygame.sprite.Sprite):
     def draw(self, surface):
         if conf.SHOWHITBOX:
             pygame.draw.rect(surface, conf.GREEN, self.rect)
+
+        if self.projType == ProjectileType.SAW:
+            self.rotation += conf.SAWSPEED
+            self.image = pygame.transform.rotate(
+                self.original_image, -self.rotation)
         surface.blit(self.image, self.rect)

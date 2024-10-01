@@ -60,7 +60,7 @@ class Player(pygame.sprite.Sprite):
             front_position = self.position + direction * (self.rect.height / 2)
 
             projectile = proy.Projectile(
-                front_position, direction, self.rotatingAngle, proy.ProjectileType.BASIC)
+                front_position, direction, self.rotatingAngle, proy.ProjectileType.SAW)
             projectileGroup.add(projectile)
 
             self.lastShot = 0
