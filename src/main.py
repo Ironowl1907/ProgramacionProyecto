@@ -26,8 +26,6 @@ mainPlayer = player.Player(
     int(conf.WIDTH/2), int(conf.HEIGHT/2), projectilesGroup)
 
 constr.spawnEnemy(enemiesGroup, projectilesGroup, mainPlayer)
-constr.spawnEnemy(enemiesGroup, projectilesGroup, mainPlayer)
-constr.spawnEnemy(enemiesGroup, projectilesGroup, mainPlayer)
 
 # Main game loop
 clock = pygame.time.Clock()
@@ -64,5 +62,3 @@ while running:
 
     # Update the display
     pygame.display.flip()
-
-    # Cap the frame rate

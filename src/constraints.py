@@ -4,6 +4,7 @@ from pygame.sprite import Group
 import player as player
 import conf as conf
 import enemy as enemy
+from proyectile_system import ProjectileType
 
 
 def checkCollisions(mainPlayer: player.Player, enemyGroup: Group,
@@ -22,15 +23,15 @@ def checkCollisions(mainPlayer: player.Player, enemyGroup: Group,
 
     for projectile in projectileGroup:
         for uenemy in enemyGroup:
-            if projectile.rect.colliderect(uenemy.rect) and not \
-                    projectile.harmsPlayer:
+            if projectile.rect.colliderect(uenemy.rect) and \
+                    projectile.projType != ProjectileType.BASICENEMY:
                 uenemy.kill()
                 projectileGroup.remove(projectile)
-            if projectile.rect.colliderect(mainPlayer.rect) and \
-                    projectile.harmsPlayer and \
-                    mainPlayer.invencibleTime >= 0:
-                print("Game Over")
-                exit()
+                if projectile.rect.colliderect(mainPlayer.rect) and \
+                        projectile.projType != ProjectileType.BASICENEMY and \
+                        mainPlayer.invencibleTime >= 0:
+                    print("Game Over")
+                    exit()
 
 
 def spawnEnemy(enemyGroup: Group, projectileGroup: Group,
