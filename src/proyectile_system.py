@@ -6,9 +6,9 @@ import conf as conf
 
 class ProjectileType():
     BASIC = 0
-    BASICENEMY = 3
     SAW = 1
     LASER = 2
+    BASICENEMY = 3
 
 
 direction = pygame.Vector2(0, -1)

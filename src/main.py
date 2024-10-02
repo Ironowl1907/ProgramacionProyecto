@@ -13,6 +13,7 @@ pygame.init()
 # Create a window
 screen = pygame.display.set_mode((conf.WIDTH, conf.HEIGHT))
 pygame.display.set_caption("Avion de basura (que se yo)")
+background = pygame.image.load("../res/Background.png")
 
 
 def mainGame():
@@ -53,7 +54,7 @@ def mainGame():
         constr.checkCollisions(mainPlayer, enemiesGroup, projectilesGroup)
 
         # Render
-        screen.fill(conf.BLACK)
+        screen.blit(background, (0, 0))
         mainPlayer.draw(screen)
         for uenemy in enemiesGroup:
             uenemy.draw(screen)

@@ -37,7 +37,6 @@ class Player(pygame.sprite.Sprite):
         if self.changeWeaponCooldown >= conf.CHANGEWEAPONCOOLDOWN:
             self.actualWeapon = (self.actualWeapon + 1) % len(weaponList)
             self.changeWeaponCooldown = 0
-            print(self.actualWeapon)
 
     def update(self, deltaTime: float):
         self.lastShot += deltaTime
