@@ -1,4 +1,5 @@
 import pygame
+import random as rand
 from random import randint
 from pygame.sprite import Group
 import player as player
@@ -40,5 +41,6 @@ def checkCollisions(mainPlayer: player.Player, enemyGroup: Group,
 
 
 def spawnEnemy(enemyGroup: Group, projectileGroup: Group):
-    newEnemy = enemy.Enemy(projectileGroup, conf.WIDTH//2, -100)
+    newEnemy = enemy.Enemy(projectileGroup, int(
+        rand.random() * conf.WIDTH), -100)
     enemyGroup.add(newEnemy)

@@ -40,7 +40,8 @@ class Enemy(pygame.sprite.Sprite):
         self.killAnimationTime = conf.KILLANIMATIONTIME
 
     def update(self, deltaTime: float, playerPosition: Vector2, enemyGroup: Group):
-        self.direction = playerPosition - self.position
+        if not self.killed:
+            self.direction = playerPosition - self.position
         self.randMovCooldown += deltaTime
         self.shootCooldown += deltaTime
         if self.randMovCooldown >= conf.RANDCOOLDOWN:
@@ -62,7 +63,9 @@ class Enemy(pygame.sprite.Sprite):
             self.rotatingAngle += conf.KILLEDROTATIONSPEED
 
         if self.randMovCooldown >= conf.ENEMYSHOOTCOOLDOWN and \
-                rand.randint(1, conf.ENEMYSHOOTRAND) == 1:
+                rand.randint(1, conf.ENEMYSHOOTRAND) == 1 and not \
+                self.killed:
+
             self.shootCooldown = 0
             self.shoot(self.proyectileGoup)
         self._update_position()
@@ -73,8 +76,7 @@ class Enemy(pygame.sprite.Sprite):
             self.position += self.direction.normalize() * self.speed
             self.position += self.randMove
         else:
-            self.position += Vector2(0, 1) * self.speed
-            self.position += self.randMove
+            self.position += self.direction.normalize() * self.speed
 
         self.rect.center = (int(self.position.x), int(self.position.y))
 
