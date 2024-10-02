@@ -2,6 +2,7 @@ import pygame
 import pygame_menu
 import sys
 from main import mainGame
+from src.upgrades import weapons_upgrades
 
 # Constants
 WIDTH, HEIGHT = 800, 600
@@ -33,11 +34,7 @@ tips = [
 ]
 
 # Sample list of upgrades (replace these with your own)
-upgrades = [
-    {"name": "Laser Eco-friendly", "cost": 10},
-    {"name": "Reduccion de Carbono 1", "cost": 15},
-    {"name": "", "cost": 20},
-]
+upgrades = weapons_upgrades
 
 # Game variables
 points = 0
@@ -52,7 +49,6 @@ def display_tip(selected_tip):
     text_rect = text_surface.get_rect(center=(WIDTH // 2, HEIGHT // 2))
     screen.blit(text_surface, text_rect)
     pygame.display.flip()
-
 
 def show_tips_with_timer():
     for tip in tips:
