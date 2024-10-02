@@ -27,7 +27,7 @@ def mainGame():
     mainPlayer = player.Player(
         int(conf.WIDTH/2), int(conf.HEIGHT/2), projectilesGroup)
 
-    constr.spawnEnemy(enemiesGroup, projectilesGroup, mainPlayer)
+    constr.spawnEnemy(enemiesGroup, projectilesGroup)
 
     # Main game loop
     clock = pygame.time.Clock()

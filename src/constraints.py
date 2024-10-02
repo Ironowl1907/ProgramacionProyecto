@@ -34,30 +34,11 @@ def checkCollisions(mainPlayer: player.Player, enemyGroup: Group,
             if projectile.rect.colliderect(mainPlayer.rect) and \
                     projectile.projType == ProjectileType.BASICENEMY and not\
                     mainPlayer.inmortal:
-                print(f"Game Over: Player hit by projectile: {int(projectile.projType)}")
+                print(f"Game Over: Player hit by projectile: {
+                      int(projectile.projType)}")
                 exit()
 
 
-def spawnEnemy(enemyGroup: Group, projectileGroup: Group,
-               mainPlayer: player.Player):
-    newEnemy = enemy.Enemy(projectileGroup, 0, 0)
-    position = pygame.Vector2(0, 0)  # More explicit initialization
-    overlapping = True
-
-    while overlapping:
-        overlapping = False
-
-        position.x = randint(0, conf.WIDTH - newEnemy.rect.width)
-        position.y = randint(0, conf.HEIGHT - newEnemy.rect.height)
-
-        newEnemy.position = position
-        # Make sure the rect is updated
-        newEnemy.rect.topleft = (position.x, position.y)
-
-        for uenemy in enemyGroup:
-            if newEnemy.rect.colliderect(uenemy.rect) or \
-                    newEnemy.rect.colliderect(mainPlayer.rect):
-                overlapping = True
-                break
-
+def spawnEnemy(enemyGroup: Group, projectileGroup: Group):
+    newEnemy = enemy.Enemy(projectileGroup, conf.WIDTH//2, -100)
     enemyGroup.add(newEnemy)

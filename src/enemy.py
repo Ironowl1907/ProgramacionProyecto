@@ -83,7 +83,7 @@ class Enemy(pygame.sprite.Sprite):
             self.position.x = max(
                 0, min(self.position.x, conf.WIDTH - self.rect.width))
             self.position.y = max(
-                0, min(self.position.y, conf.HEIGHT - self.rect.height))
+                -100, min(self.position.y, conf.HEIGHT - self.rect.height))
 
     def draw(self, surface):
         if conf.SHOWHITBOX:

@@ -1,7 +1,7 @@
 import pygame
 import pygame_menu
 import sys
-from src import main
+from main import mainGame
 
 # Constants
 WIDTH, HEIGHT = 800, 600
@@ -14,7 +14,8 @@ pygame.display.set_caption("Game Tips")
 
 # Load Minecraft Font
 font_path = r"../res/Fonts/Minecraftia-Regular.ttf"
-minecraft_font = pygame.font.Font(font_path, 36)  # Main font for menu and upgrades
+# Main font for menu and upgrades
+minecraft_font = pygame.font.Font(font_path, 36)
 tip_font = pygame.font.Font(font_path, 16)  # Smaller font for tips
 
 # Sample list of tips (replace these with your own)
@@ -46,7 +47,8 @@ selected_upgrade_index = 0
 # Function to display a tip
 def display_tip(selected_tip):
     screen.fill((0, 0, 0))  # Clear screen with black background
-    text_surface = tip_font.render(selected_tip, True, (255, 255, 255))  # White text using smaller font
+    # White text using smaller font
+    text_surface = tip_font.render(selected_tip, True, (255, 255, 255))
     text_rect = text_surface.get_rect(center=(WIDTH // 2, HEIGHT // 2))
     screen.blit(text_surface, text_rect)
     pygame.display.flip()
@@ -118,11 +120,14 @@ def upgrade_menu():
                 sys.exit()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_TAB:  # Use Tab to navigate through upgrades
-                    selected_upgrade_index = (selected_upgrade_index + 1) % len(upgrades)
-                    print(f"Selected Upgrade: {upgrades[selected_upgrade_index]['name']}")
+                    selected_upgrade_index = (
+                        selected_upgrade_index + 1) % len(upgrades)
+                    print(f"Selected Upgrade: {
+                          upgrades[selected_upgrade_index]['name']}")
                 if event.key == pygame.K_RETURN:  # Use Enter to confirm selection
                     purchase_upgrade(upgrades[selected_upgrade_index])
-                if event.key == pygame.K_ESCAPE:  # Use Escape to go back (optional)
+                # Use Escape to go back (optional)
+                if event.key == pygame.K_ESCAPE:
                     return  # Exit the upgrade menu
 
         # Update the menu display
