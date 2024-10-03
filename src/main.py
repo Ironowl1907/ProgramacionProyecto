@@ -30,7 +30,8 @@ def mainGame():
 
     constr.spawnEnemy(enemiesGroup, projectilesGroup)
 
-    mainUi = ui.Ui(pygame.Vector2(conf.WIDTH/2, conf.HEIGHT * 7/8), mainPlayer)
+    mainUi = ui.Ui(pygame.Vector2(
+        conf.WIDTH/2, conf.HEIGHT * conf.UIPOSITION), mainPlayer)
 
     # Main game loop
     clock = pygame.time.Clock()
