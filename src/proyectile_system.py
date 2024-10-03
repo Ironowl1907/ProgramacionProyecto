@@ -34,7 +34,7 @@ class Projectile(pygame.sprite.Sprite):
                 self.spritePath = "../res/Player/Player_Items/Player_Laser.png"
             case ProjectileType.NET:
                 self.spritePath = "../res/Player/Player_Items/Player_Web.png"
-                self.scaleVector = (50, 50)
+                self.scaleVector = (80, 80)
 
         self.rotation = rotation
         self.original_image = pygame.image.load(self.spritePath)

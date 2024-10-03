@@ -28,13 +28,14 @@ def mainGame():
     mainPlayer = player.Player(
         int(conf.WIDTH/2), int(conf.HEIGHT/2), projectilesGroup)
 
-    constr.spawnEnemy(enemiesGroup, projectilesGroup)
-    constr.spawnEnemy(enemiesGroup, projectilesGroup)
-    constr.spawnEnemy(enemiesGroup, projectilesGroup)
-    constr.spawnEnemy(enemiesGroup, projectilesGroup)
-
     mainUi = ui.Ui(pygame.Vector2(
         conf.WIDTH/2, conf.HEIGHT * conf.UIPOSITION), mainPlayer)
+
+    # Game timing and difficulty variables
+    timePlayed = 0
+    waveNumber = 0
+    baseEnemyCount = 2
+    spawnInterval = 10
 
     # Main game loop
     clock = pygame.time.Clock()
@@ -42,6 +43,8 @@ def mainGame():
 
     while running:
         deltaTime = clock.tick(conf.FPS) / 1000
+        timePlayed += deltaTime
+
         # Handle events
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -51,16 +54,30 @@ def mainGame():
         # Handle Input
         input.getInput(mainPlayer, projectilesGroup, deltaTime)
 
-        # Update
+        # Check if it's time to spawn a new wave of enemies
+        if timePlayed >= spawnInterval * waveNumber:
+            waveNumber += 1
+
+            # Calculate number of enemies for this wave
+            additionalEnemies = int(
+                (timePlayed / 60) + (mainPlayer.killedEnemies / 5))
+            enemiesInWave = baseEnemyCount + additionalEnemies
+
+            # Spawn enemies for this wave
+            for _ in range(enemiesInWave):
+                constr.spawnEnemy(enemiesGroup, projectilesGroup)
+
+        # Update game objects
         for projectile in projectilesGroup:
             projectile.update()
         for uenemy in enemiesGroup:
             uenemy.update(deltaTime, mainPlayer.position, enemiesGroup)
         mainPlayer.update(deltaTime)
 
+        # Check for collisions
         constr.checkCollisions(mainPlayer, enemiesGroup, projectilesGroup)
 
-        # Render
+        # Render the game
         screen.blit(background, (0, 0))
         mainPlayer.draw(screen)
         for uenemy in enemiesGroup:
