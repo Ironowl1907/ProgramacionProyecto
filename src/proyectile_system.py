@@ -28,7 +28,7 @@ class Projectile(pygame.sprite.Sprite):
                 self.scaleVector = (20, 30)
             case ProjectileType.SAW:
                 self.spritePath = "../res/Player/Player_Items/Player_Saw.png"
-                self.scaleVector = (50, 50)
+                self.scaleVector = (80, 80)
             case ProjectileType.LASER:
                 self.spritePath = "../res/Player/Player_Items/Player_Laser.png"
 

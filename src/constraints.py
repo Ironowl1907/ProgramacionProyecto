@@ -27,12 +27,14 @@ def checkCollisions(mainPlayer: player.Player, enemyGroup: Group,
             if projectile.rect.colliderect(uenemy.rect) and \
                     projectile.projType != ProjectileType.BASICENEMY:
                 if projectile.projType == ProjectileType.SAW:
-                    uenemy.kill()
-                    projectile.randDir()
-                else:
                     if not uenemy.killed:
                         mainPlayer.killedEnemies += 1
                     uenemy.kill()
+                    projectile.randDir()
+                else:
+                    print("Else")
+                    if not uenemy.killed:
+                        mainPlayer.killedEnemies += 1
                     projectileGroup.remove(projectile)
                     uenemy.kill()
 
