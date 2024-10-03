@@ -6,7 +6,7 @@ import pygame
 # Player class
 
 weaponList = [proy.ProjectileType.BASIC,
-              proy.ProjectileType.SAW, proy.ProjectileType.LASER]
+              proy.ProjectileType.SAW, proy.ProjectileType.LASER, proy.ProjectileType.NET]
 
 
 class Player(pygame.sprite.Sprite):

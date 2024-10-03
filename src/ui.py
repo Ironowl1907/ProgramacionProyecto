@@ -18,6 +18,8 @@ class Ui:
             "../res/Player/Player_Items/Player_Bullet_Item.png", (50, 50))
         self.laserIcon = self._load_and_scale_image(
             "../res/Player/Player_Items/Player_Laser_Item.png", (50, 50))
+        self.netIcon = self._load_and_scale_image(
+            "../res/Player/Player_Items/Player_Web_Item.png", (50, 50))
         self.noImg = self._load_and_scale_image(
             "../res/ui/no_weapon.png", (50, 50))
 
@@ -38,6 +40,8 @@ class Ui:
                 selected = self.laserIcon
             case ProjectileType.SAW:
                 selected = self.sawIcon
+            case ProjectileType.NET:
+                selected = self.netIcon
             case _:
                 selected = self.noImg
         surface.blit(selected, (position.x, position.y))
@@ -56,4 +60,4 @@ class Ui:
         self._drawSelectedWeapon(
             Vector2(self.position.x / 8, self.position.y), selected_weapon_type, surface)
         self._drawKilledEnemies(
-            Vector2(self.position.x + self.position.x/8, self.position.y), surface)
+            Vector2(self.position.x + self.position.x * 2/3, self.position.y), surface)

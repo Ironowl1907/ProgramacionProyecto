@@ -29,6 +29,9 @@ def mainGame():
         int(conf.WIDTH/2), int(conf.HEIGHT/2), projectilesGroup)
 
     constr.spawnEnemy(enemiesGroup, projectilesGroup)
+    constr.spawnEnemy(enemiesGroup, projectilesGroup)
+    constr.spawnEnemy(enemiesGroup, projectilesGroup)
+    constr.spawnEnemy(enemiesGroup, projectilesGroup)
 
     mainUi = ui.Ui(pygame.Vector2(
         conf.WIDTH/2, conf.HEIGHT * conf.UIPOSITION), mainPlayer)

@@ -1,52 +1,49 @@
 import pygame
 import random as rand
-from random import randint
 from pygame.sprite import Group
-import player as player
-import conf as conf
-import enemy as enemy
+import player
+import conf
+import enemy
 from proyectile_system import ProjectileType
 
 
-def checkCollisions(mainPlayer: player.Player, enemyGroup: Group,
-                    projectileGroup: Group):
-    # for i, enemy1 in enumerate(enemyGroup):
-    #     for j, enemy2 in enumerate(enemyGroup):
-    #         if i < j:  # Ensure each pair is only checked once
-    #             if enemy1.rect.colliderect(enemy2.rect):
-    pass
-
-    for uenemy in enemyGroup:
-        if mainPlayer.rect.colliderect(uenemy.rect) and \
-                mainPlayer.invencibleTime <= 0 and not mainPlayer.inmortal:
+def checkCollisions(main_player: player.Player, enemy_group: Group, projectile_group: Group):
+    # Player-enemy collisions
+    for current_enemy in enemy_group:
+        if main_player.invencibleTime > 0 or main_player.inmortal:
+            continue
+        if main_player.rect.colliderect(current_enemy.rect):
             print("Game Over: Player crashed with enemy")
             exit()
 
-    for projectile in projectileGroup:
-        for uenemy in enemyGroup:
-            if projectile.rect.colliderect(uenemy.rect) and \
-                    projectile.projType != ProjectileType.BASICENEMY:
-                if projectile.projType == ProjectileType.SAW:
-                    if not uenemy.killed:
-                        mainPlayer.killedEnemies += 1
-                    uenemy.kill()
-                    projectile.randDir()
-                else:
-                    print("Else")
-                    if not uenemy.killed:
-                        mainPlayer.killedEnemies += 1
-                    projectileGroup.remove(projectile)
-                    uenemy.kill()
-
-            if projectile.rect.colliderect(mainPlayer.rect) and \
-                    projectile.projType == ProjectileType.BASICENEMY and not\
-                    mainPlayer.inmortal:
+    # Projectile collisions
+    for projectile in projectile_group:
+        if projectile.projType == ProjectileType.BASICENEMY and not main_player.inmortal:
+            if projectile.rect.colliderect(main_player.rect):
                 print(f"Game Over: Player hit by projectile: {
                       int(projectile.projType)}")
                 exit()
 
+        for current_enemy in enemy_group:
+            if projectile.projType == ProjectileType.BASICENEMY:
+                continue
+            if not projectile.rect.colliderect(current_enemy.rect):
+                continue
 
-def spawnEnemy(enemyGroup: Group, projectileGroup: Group):
-    newEnemy = enemy.Enemy(projectileGroup, int(
+            if projectile.projType == ProjectileType.SAW:
+                current_enemy.kill()
+                projectile.randDir()
+            elif projectile.projType == ProjectileType.NET and current_enemy.killed:
+                main_player.killedEnemies += 1
+                projectile_group.remove(projectile)
+                enemy_group.remove(current_enemy)
+
+            else:
+                projectile_group.remove(projectile)
+                current_enemy.kill()
+
+
+def spawnEnemy(enemy_group: Group, projectile_group: Group):
+    new_enemy = enemy.Enemy(projectile_group, int(
         rand.random() * conf.WIDTH), -100)
-    enemyGroup.add(newEnemy)
+    enemy_group.add(new_enemy)

@@ -8,7 +8,8 @@ class ProjectileType():
     BASIC = 0
     SAW = 1
     LASER = 2
-    BASICENEMY = 3
+    NET = 3
+    BASICENEMY = 4
 
 
 direction = pygame.Vector2(0, -1)
@@ -31,6 +32,9 @@ class Projectile(pygame.sprite.Sprite):
                 self.scaleVector = (80, 80)
             case ProjectileType.LASER:
                 self.spritePath = "../res/Player/Player_Items/Player_Laser.png"
+            case ProjectileType.NET:
+                self.spritePath = "../res/Player/Player_Items/Player_Web.png"
+                self.scaleVector = (50, 50)
 
         self.rotation = rotation
         self.original_image = pygame.image.load(self.spritePath)
