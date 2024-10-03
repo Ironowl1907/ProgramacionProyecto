@@ -6,6 +6,7 @@ from enemy import Enemy
 import input as input
 import sys
 import player as player
+import ui as ui
 
 # Initialize pygame
 pygame.init()
@@ -28,6 +29,8 @@ def mainGame():
         int(conf.WIDTH/2), int(conf.HEIGHT/2), projectilesGroup)
 
     constr.spawnEnemy(enemiesGroup, projectilesGroup)
+
+    mainUi = ui.Ui(pygame.Vector2(conf.WIDTH/2, conf.HEIGHT * 7/8), mainPlayer)
 
     # Main game loop
     clock = pygame.time.Clock()
@@ -60,6 +63,8 @@ def mainGame():
             uenemy.draw(screen)
         for projectile in projectilesGroup:
             projectile.draw(screen)
+
+        mainUi.draw(screen)
 
         # Update the display
         pygame.display.flip()

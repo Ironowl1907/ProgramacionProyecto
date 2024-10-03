@@ -16,10 +16,11 @@ class Player(pygame.sprite.Sprite):
         self.position = pygame.Vector2(x, y)
         self.velocity = pygame.Vector2(0)
 
-        self.original_image = pygame.image.load("../res/Player.png")
-        self.original_shield = pygame.image.load("../res/Shield.png")
+        self.original_image = pygame.image.load("../res/Player/Player.png")
+        self.original_shield = pygame.image.load(
+            "../res/Player/Player_Items/Player_Shield.png")
         self.image = pygame.transform.scale(
-            self.original_image, (50, 50))
+            self.original_image, (50, 75))
         self.shield = pygame.transform.scale(
             self.original_shield, (80, 80))
         self.rect = self.image.get_rect(center=self.position)

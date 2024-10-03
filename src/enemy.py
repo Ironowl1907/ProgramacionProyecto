@@ -20,12 +20,12 @@ class Enemy(pygame.sprite.Sprite):
         self.rotatingAngle = 0
         self.direction = Vector2(0)
 
-        self.original_image = pygame.image.load("../res/Enemy.png")
+        self.original_image = pygame.image.load("../res/Enemy/Enemy.png")
         self.image = pygame.transform.scale(
             self.original_image, (50, 50))
 
         self.killed_original_image = pygame.image.load(
-            "../res/Destoyed_Enemy.png")
+            "../res/Enemy/Destroyed_Enemy.png")
         self.killed_image = pygame.transform.scale(
             self.killed_original_image, (50, 50))
 

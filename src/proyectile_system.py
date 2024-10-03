@@ -21,16 +21,16 @@ class Projectile(pygame.sprite.Sprite):
         self.scaleVector = (1, 1)
         match projType:
             case ProjectileType.BASIC:
-                self.spritePath = "../res/Player_beam.png"
+                self.spritePath = "../res/Player/Player_Items/Player_Bullet.png"
                 self.scaleVector = (20, 30)
             case ProjectileType.BASICENEMY:
-                self.spritePath = "../res/Enemy_beam.png"
+                self.spritePath = "../res/Enemy/Enemy_Bullet.png"
                 self.scaleVector = (20, 30)
             case ProjectileType.SAW:
-                self.spritePath = "../res/Player_saw.png"
+                self.spritePath = "../res/Player/Player_Items/Player_Saw.png"
                 self.scaleVector = (50, 50)
             case ProjectileType.LASER:
-                self.spritePath = "../res/Player_beam.png"
+                self.spritePath = "../res/Player/Player_Items/Player_Laser.png"
 
         self.rotation = rotation
         self.original_image = pygame.image.load(self.spritePath)
