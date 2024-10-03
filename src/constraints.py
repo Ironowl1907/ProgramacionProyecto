@@ -20,8 +20,7 @@ def checkCollisions(main_player: player.Player, enemy_group: Group, projectile_g
     for projectile in projectile_group:
         if projectile.projType == ProjectileType.BASICENEMY and not main_player.inmortal:
             if projectile.rect.colliderect(main_player.rect):
-                print(f"Game Over: Player hit by projectile: {
-                      int(projectile.projType)}")
+                print(f"Game Over: Player hit by projectile: {int(projectile.projType)}")
                 exit()
 
         for current_enemy in enemy_group:
