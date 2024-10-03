@@ -34,6 +34,8 @@ class Player(pygame.sprite.Sprite):
         self.actualWeapon = 0
         self.changeWeaponCooldown = 0
 
+        self.killedEnemies = 0
+
     def newWeapon(self):
         if self.changeWeaponCooldown >= conf.CHANGEWEAPONCOOLDOWN:
             self.actualWeapon = (self.actualWeapon + 1) % len(weaponList)

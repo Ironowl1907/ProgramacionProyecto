@@ -30,12 +30,17 @@ def checkCollisions(mainPlayer: player.Player, enemyGroup: Group,
                     uenemy.kill()
                     projectile.randDir()
                 else:
+                    if not uenemy.killed:
+                        mainPlayer.killedEnemies += 1
                     uenemy.kill()
                     projectileGroup.remove(projectile)
+                    uenemy.kill()
+
             if projectile.rect.colliderect(mainPlayer.rect) and \
                     projectile.projType == ProjectileType.BASICENEMY and not\
                     mainPlayer.inmortal:
-                print(f"Game Over: Player hit by projectile: {int(projectile.projType)}")
+                print(f"Game Over: Player hit by projectile: {
+                      int(projectile.projType)}")
                 exit()
 
 
