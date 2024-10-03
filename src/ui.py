@@ -13,7 +13,9 @@ class Ui:
         self.position = position
         self.player = mainPlayer
 
-        # self.sawIcon = pygame.image.load("../res/Player_saw_item.png")
+        self.sawIcon = pygame.image.load(
+            "../res/Player/Player_Items/Player_Saw_Item.png")
+        self.sawIcon = scale(self.sawIcon, (50, 50))
         self.basicIcon = pygame.image.load(
             "../res/Player/Player_Items/Player_Bullet_Item.png")
         self.basicIcon = scale(self.basicIcon, (50, 50))
@@ -30,6 +32,8 @@ class Ui:
                 selected = self.basicIcon
             case ProjectileType.LASER:
                 selected = self.laserIcon
+            case ProjectileType.SAW:
+                selected = self.sawIcon
             case _:
                 selected = self.noImg
         surface.blit(selected, (position.x, position.y))
