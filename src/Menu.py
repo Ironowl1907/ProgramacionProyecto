@@ -1,6 +1,9 @@
 import pygame
 import pygame_menu
 import sys
+
+from pygame.examples.cursors import image
+
 import main
 from src.upgrades import weapons_upgrades
 
@@ -15,134 +18,48 @@ pygame.display.set_caption("Game Tips")
 
 # Load Minecraft Font
 font_path = r"../res/Fonts/Minecraftia-Regular.ttf"
+
 # Main font for menu and upgrades
 minecraft_font = pygame.font.Font(font_path, 36)
 tip_font = pygame.font.Font(font_path, 16)  # Smaller font for tips
 
-# Sample list of tips (replace these with your own)
-tips = [
-    "1. Separa tus residuos en casa: plásticos, papel, vidrio y orgánicos.",
-    "2. Limpia los envases antes de reciclarlos para evitar contaminaciones.",
-    "3. Infórmate sobre las normas de reciclaje en tu localidad.",
-    "4. Reutiliza envases y bolsas siempre que sea posible.",
-    "5. Compra productos con menos embalaje y opta por envases reciclables.",
-    "6. Participa en programas de reciclaje comunitarios.",
-    "7. Recicla correctamente las baterías y productos electrónicos.",
-    "8. Usa papel reciclado para tus impresiones y manualidades.",
-    "9. Dona ropa y objetos que ya no uses en lugar de tirarlos.",
-    "10. Compostar residuos orgánicos para reducir la basura."
-]
 
-# Sample list of upgrades
-upgrades = weapons_upgrades
+# Function to display credits
+def display_credits():
+    # Title and sample credits text
+    title_text = "Credits"
+    credits_text = [
+        "Game Developed by: Facundo Guiñazú, Bautista Prieto",
+        "Graphics by: Nicolas Manescau",
+        "Music by: Nicolas Manescau",
+        "Press ESC to return to the main menu"
+    ]
 
-# Game variables
-points = 0
-selected_upgrade_index = 0
+    # Clear screen with black background
+    screen.fill((0, 0, 0))
 
+    # Render title
+    title_surface = minecraft_font.render(title_text, True, (255, 215, 0))  # Gold color for title
+    title_rect = title_surface.get_rect(center=(WIDTH // 2, HEIGHT // 4))  # Centered at the top
+    screen.blit(title_surface, title_rect)
 
-# Function to display a tip
-def display_tip(selected_tip):
-    screen.fill((0, 0, 0))  # Clear screen with black background
-    # White text using smaller font
-    text_surface = tip_font.render(selected_tip, True, (255, 255, 255))
-    text_rect = text_surface.get_rect(center=(WIDTH // 2, HEIGHT // 2))
-    screen.blit(text_surface, text_rect)
-    pygame.display.flip()
+    # Render each line of credits
+    for i, line in enumerate(credits_text):
+        text_surface = tip_font.render(line, True, (255, 255, 255))  # White text
+        text_rect = text_surface.get_rect(center=(WIDTH // 2, HEIGHT // 2 + i * 30))  # Adjust vertical position
+        screen.blit(text_surface, text_rect)
 
-def show_tips_with_timer():
-    for tip in tips:
-        display_tip(tip)
+    pygame.display.flip()  # Update the display
 
-        # Start a timer for displaying the tip
-        start_time = pygame.time.get_ticks()
-
-        # Wait for specified time or until Escape is pressed
-        while True:
-            current_time = pygame.time.get_ticks()
-            if current_time - start_time >= TIP_DISPLAY_TIME:  # Time elapsed
-                break
-
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.exit()
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_ESCAPE:  # Allow back navigation with Escape key
-                        return  # Exit to main menu
-
-# Function to display messages
-def display_message(message):
-    screen.fill((0, 0, 0))  # Clear screen with black background
-    text_surface = tip_font.render(message, True, (255, 255, 255))
-    text_rect = text_surface.get_rect(center=(WIDTH // 2, HEIGHT // 2))
-    screen.blit(text_surface, text_rect)
-    pygame.display.flip()
-    pygame.time.delay(2000)  # Display message for 2 seconds
-
-# Function to purchase an upgrade
-def purchase_upgrade(upgrade):
-    global points
-    if points >= upgrade.cost:
-        points -= upgrade.cost
-        success_message = f"Purchased: {upgrade.name}"
-        print(success_message)
-        display_message(success_message)  # Display success message
-        return True
-    else:
-        error_message = f"Not enough points! You have {points} points."
-        print(error_message)
-        display_message(error_message)  # Display error message
-        return False
-
-# Menu function for upgrades
-def upgrade_menu():
-    global selected_upgrade_index
-
-    my_theme = pygame_menu.themes.Theme(
-        widget_font=font_path,
-        title_font=font_path,
-        widget_font_size=24,
-        title_font_size=30,
-        widget_font_color=(255, 255, 255),
-        title_font_color=(255, 215, 0),  # Gold color for title
-        background_color=(0, 0, 0)  # Black background
-    )
-
-    upgrades_menu = pygame_menu.Menu('Mejoras', WIDTH, HEIGHT,
-                                     theme=my_theme)
-
-    # Add buttons for upgrades
-    for i, upgrade in enumerate(upgrades):
-        upgrades_menu.add.button(f"{upgrade.name} - Costo: {upgrade.cost} puntos",
-                                 lambda u=upgrade: purchase_upgrade(u))
-
-    upgrades_menu.add.button('Atras', start_menu)
-
+    # Wait for player input to return
     while True:
-        # Handle events for the upgrades menu
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_TAB:  # Use Tab to navigate through upgrades
-                    selected_upgrade_index = (
-                        selected_upgrade_index + 1) % len(upgrades)
-                    print(f"Mejora Seleccionada: {
-                          upgrades[selected_upgrade_index].name}")
-                if event.key == pygame.K_RETURN:  # Use Enter to confirm selection
-                    purchase_upgrade(upgrades[selected_upgrade_index])
-                # Use Escape to go back (optional)
-                if event.key == pygame.K_ESCAPE:
-                    return  # Exit the upgrade menu
-
-        # Update the menu display
-        upgrades_menu.mainloop(screen)
-
-
-# Main game loop function
-
+                if event.key == pygame.K_ESCAPE:  # Allow back navigation with Escape key
+                    return  # Exit to main menu
 
 def start_menu():
     my_theme = pygame_menu.themes.Theme(
@@ -155,14 +72,13 @@ def start_menu():
         background_color=(0, 0, 0)  # Black background
     )
 
-    menu = pygame_menu.Menu('Recycled Space', WIDTH, HEIGHT,
-                            theme=my_theme)
+    menu = pygame_menu.Menu(title='/////', width=WIDTH, height=HEIGHT, theme=my_theme)
 
-    menu.add.button('Tips de reciclaje!', show_tips_with_timer)
+    menu.add.label(title="Bienvenido a Recycled Space!", font_size=36, font_color=(255, 215, 0), margin=(20, 20))
 
     menu.add.button('Empezar juego', main.mainGame)  # Start the main game loop
 
-    menu.add.button('Mejoras', upgrade_menu)
+    menu.add.button('Creditos', display_credits)
 
     menu.add.button('Salir', pygame_menu.events.EXIT)
 
