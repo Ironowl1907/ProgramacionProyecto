@@ -1,4 +1,5 @@
 from pygame.math import Vector2
+import progressBar as pb
 import random as rand
 import math
 import proyectile_system as proy
@@ -37,7 +38,7 @@ class Enemy(pygame.sprite.Sprite):
         self.randMove = Vector2(0)
 
         self.killed = False
-        self.killAnimationTime = conf.KILLANIMATIONTIME
+        self.despawnLeftTime = 0
 
     def update(self, deltaTime: float, playerPosition: Vector2, enemyGroup: Group):
         if not self.killed:
@@ -56,36 +57,34 @@ class Enemy(pygame.sprite.Sprite):
             self.rotatingAngle -= 90
 
         else:
-            self.killAnimationTime -= deltaTime
-            if self.killAnimationTime <= 0:
-                enemyGroup.remove(self)
-                print("Enemy despawned")
             self.rotatingAngle += conf.KILLEDROTATIONSPEED
+            self.despawnLeftTime -= deltaTime
+            if self.despawnLeftTime <= 0:
+                enemyGroup.remove(self)
 
         if self.randMovCooldown >= conf.ENEMYSHOOTCOOLDOWN and \
                 rand.randint(1, conf.ENEMYSHOOTRAND) == 1 and not \
                 self.killed:
-
             self.shootCooldown = 0
             self.shoot(self.proyectileGoup)
+
         self._update_position()
         self._check_boundaries()
 
     def _update_position(self):
         if not self.killed:
-            self.position += self.direction.normalize() * self.speed
-            self.position += self.randMove
+            self.direction = self.direction.normalize() * self.speed + self.randMove
+            self.position += self.direction
         else:
-            self.position += self.direction.normalize() * self.speed
+            self.position += self.direction * conf.RUBBISHSPEEDMUL
 
         self.rect.center = (int(self.position.x), int(self.position.y))
 
     def _check_boundaries(self):
-        if not self.killed:
-            self.position.x = max(
-                0, min(self.position.x, conf.WIDTH - self.rect.width))
-            self.position.y = max(
-                -100, min(self.position.y, conf.HEIGHT - self.rect.height))
+        self.position.x = max(
+            0, min(self.position.x, conf.WIDTH - self.rect.width))
+        self.position.y = max(
+            -100, min(self.position.y, conf.HEIGHT - self.rect.height))
 
     def draw(self, surface):
         if conf.SHOWHITBOX:
@@ -98,6 +97,8 @@ class Enemy(pygame.sprite.Sprite):
                 center=self.rect.center)
 
         else:
+            pb.draw_progress_bar(Vector2(self.position.x, self.position.y+20),
+                                 self.despawnLeftTime/conf.AFTERKILLTIME, surface)
             rotated_image = pygame.transform.rotate(
                 self.killed_image, -self.rotatingAngle)
             rotated_rect = rotated_image.get_rect(
@@ -107,6 +108,7 @@ class Enemy(pygame.sprite.Sprite):
 
     def kill(self):
         self.killed = True
+        self.despawnLeftTime = conf.AFTERKILLTIME
 
     def shoot(self, projectileGroup: Group):
         direction = pygame.Vector2(0, 1).rotate(self.rotatingAngle)
