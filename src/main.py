@@ -32,7 +32,7 @@ def mainGame():
         conf.WIDTH/2, conf.HEIGHT * conf.UIPOSITION), mainPlayer)
 
     # Game timing and difficulty variables
-    timePlayed = 0
+    spawnTimeCounter = 0
     waveNumber = 0
     baseEnemyCount = 2
     spawnInterval = 10
@@ -43,7 +43,7 @@ def mainGame():
 
     while running:
         deltaTime = clock.tick(conf.FPS) / 1000
-        timePlayed += deltaTime
+        spawnTimeCounter += deltaTime
 
         # Handle events
         for event in pygame.event.get():
@@ -55,12 +55,12 @@ def mainGame():
         input.getInput(mainPlayer, projectilesGroup, deltaTime)
 
         # Check if it's time to spawn a new wave of enemies
-        if timePlayed >= spawnInterval * waveNumber:
+        if spawnTimeCounter >= spawnInterval * waveNumber:
             waveNumber += 1
 
             # Calculate number of enemies for this wave
             additionalEnemies = int(
-                (timePlayed / 60) + (mainPlayer.killedEnemies / 5))
+                (spawnTimeCounter / 60) + (mainPlayer.killedEnemies / 5))
             enemiesInWave = baseEnemyCount + additionalEnemies
 
             # Spawn enemies for this wave
