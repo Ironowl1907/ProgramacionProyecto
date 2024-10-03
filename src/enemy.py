@@ -97,7 +97,7 @@ class Enemy(pygame.sprite.Sprite):
                 center=self.rect.center)
 
         else:
-            pb.draw_progress_bar(Vector2(self.position.x, self.position.y+20),
+            pb.draw_progress_bar(Vector2(self.position.x, self.position.y+30),
                                  self.despawnLeftTime/conf.AFTERKILLTIME, surface)
             rotated_image = pygame.transform.rotate(
                 self.killed_image, -self.rotatingAngle)
@@ -107,8 +107,9 @@ class Enemy(pygame.sprite.Sprite):
         surface.blit(rotated_image, rotated_rect)
 
     def kill(self):
-        self.killed = True
-        self.despawnLeftTime = conf.AFTERKILLTIME
+        if not self.killed:
+            self.killed = True
+            self.despawnLeftTime = conf.AFTERKILLTIME
 
     def shoot(self, projectileGroup: Group):
         direction = pygame.Vector2(0, 1).rotate(self.rotatingAngle)

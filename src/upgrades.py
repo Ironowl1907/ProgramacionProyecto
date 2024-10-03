@@ -59,3 +59,4 @@ weapons_upgrades = [
 # Example of how to print all upgrades
 for upgrade in weapons_upgrades:
     print(upgrade)
+    print(upgrade.cost)

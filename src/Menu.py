@@ -1,7 +1,7 @@
 import pygame
 import pygame_menu
 import sys
-from main import mainGame
+import main
 from src.upgrades import weapons_upgrades
 
 # Constants
@@ -33,7 +33,7 @@ tips = [
     "10. Compostar residuos orgánicos para reducir la basura."
 ]
 
-# Sample list of upgrades (replace these with your own)
+# Sample list of upgrades
 upgrades = weapons_upgrades
 
 # Game variables
@@ -71,18 +71,29 @@ def show_tips_with_timer():
                     if event.key == pygame.K_ESCAPE:  # Allow back navigation with Escape key
                         return  # Exit to main menu
 
+# Function to display messages
+def display_message(message):
+    screen.fill((0, 0, 0))  # Clear screen with black background
+    text_surface = tip_font.render(message, True, (255, 255, 255))
+    text_rect = text_surface.get_rect(center=(WIDTH // 2, HEIGHT // 2))
+    screen.blit(text_surface, text_rect)
+    pygame.display.flip()
+    pygame.time.delay(2000)  # Display message for 2 seconds
 
 # Function to purchase an upgrade
 def purchase_upgrade(upgrade):
     global points
-    if points >= upgrade["cost"]:
-        points -= upgrade["cost"]
-        print(f"Purchased: {upgrade['name']}")
+    if points >= upgrade.cost:
+        points -= upgrade.cost
+        success_message = f"Purchased: {upgrade.name}"
+        print(success_message)
+        display_message(success_message)  # Display success message
         return True
     else:
-        print("Not enough points!")
+        error_message = f"Not enough points! You have {points} points."
+        print(error_message)
+        display_message(error_message)  # Display error message
         return False
-
 
 # Menu function for upgrades
 def upgrade_menu():
@@ -98,15 +109,15 @@ def upgrade_menu():
         background_color=(0, 0, 0)  # Black background
     )
 
-    upgrades_menu = pygame_menu.Menu('Upgrades', WIDTH, HEIGHT,
+    upgrades_menu = pygame_menu.Menu('Mejoras', WIDTH, HEIGHT,
                                      theme=my_theme)
 
     # Add buttons for upgrades
     for i, upgrade in enumerate(upgrades):
-        upgrades_menu.add.button(f"{upgrade['name']} - Cost: {upgrade['cost']} points",
+        upgrades_menu.add.button(f"{upgrade.name} - Costo: {upgrade.cost} puntos",
                                  lambda u=upgrade: purchase_upgrade(u))
 
-    upgrades_menu.add.button('Back', start_menu)
+    upgrades_menu.add.button('Atras', start_menu)
 
     while True:
         # Handle events for the upgrades menu
@@ -118,8 +129,8 @@ def upgrade_menu():
                 if event.key == pygame.K_TAB:  # Use Tab to navigate through upgrades
                     selected_upgrade_index = (
                         selected_upgrade_index + 1) % len(upgrades)
-                    print(f"Selected Upgrade: {
-                          upgrades[selected_upgrade_index]['name']}")
+                    print(f"Mejora Seleccionada: {
+                          upgrades[selected_upgrade_index].name}")
                 if event.key == pygame.K_RETURN:  # Use Enter to confirm selection
                     purchase_upgrade(upgrades[selected_upgrade_index])
                 # Use Escape to go back (optional)
