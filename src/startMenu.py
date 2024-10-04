@@ -10,7 +10,7 @@ TIP_DISPLAY_TIME = 3000  # Time in milliseconds to display each tip
 # Initialize Pygame
 pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Astroscraps")
+pygame.display.set_caption("AstroScraps")
 
 # Load Minecraft Font
 font_path = r"../res/Fonts/Minecraftia-Regular.ttf"
@@ -27,7 +27,8 @@ def display_credits():
     credits_text = [
         "Game Developed by: Facundo Guiñazú, Bautista Prieto",
         "Graphics by: Nicolas Manescau",
-        "Music by: Nicolas Manescau",
+        "Music by: Felipe Verri",
+        "Project Manager: Cristobal Gonzalez", "",
         "Press ESC to return to the main menu"
     ]
 
@@ -77,8 +78,8 @@ def start_menu():
     menu = pygame_menu.Menu(title='/////', width=WIDTH,
                             height=HEIGHT, theme=my_theme)
 
-    menu.add.label(title="Bienvenido a Recycled Space!",
-                   font_size=36, font_color=(255, 215, 0), margin=(20, 20))
+    menu.add.label( title = "AstroScraps!",
+                   font_size = 50, font_color = (255, 215, 0), margin = (20, 20))
 
     menu.add.button('Empezar juego', mainGame)  # Start the main game loop
 
@@ -87,7 +88,6 @@ def start_menu():
     menu.add.button('Salir', pygame_menu.events.EXIT)
 
     menu.mainloop(screen)
-
 
 if __name__ == "__main__":
     start_menu()
