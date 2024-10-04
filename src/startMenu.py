@@ -1,7 +1,7 @@
 import pygame
 import pygame_menu
 import sys
-from src import main
+from main import mainGame
 
 # Constants
 WIDTH, HEIGHT = 800, 600
@@ -13,7 +13,7 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Astroscraps")
 
 # Load Minecraft Font
-font_path = r"../../res/Fonts/Minecraftia-Regular.ttf"
+font_path = r"../res/Fonts/Minecraftia-Regular.ttf"
 
 # Main font for menu and upgrades
 minecraft_font = pygame.font.Font(font_path, 36)
@@ -35,14 +35,19 @@ def display_credits():
     screen.fill((0, 0, 0))
 
     # Render title
-    title_surface = minecraft_font.render(title_text, True, (255, 215, 0))  # Gold color for title
-    title_rect = title_surface.get_rect(center=(WIDTH // 2, HEIGHT // 4))  # Centered at the top
+    title_surface = minecraft_font.render(
+        title_text, True, (255, 215, 0))  # Gold color for title
+    title_rect = title_surface.get_rect(
+        center=(WIDTH // 2, HEIGHT // 4))  # Centered at the top
     screen.blit(title_surface, title_rect)
 
     # Render each line of credits
     for i, line in enumerate(credits_text):
-        text_surface = tip_font.render(line, True, (255, 255, 255))  # White text
-        text_rect = text_surface.get_rect(center=(WIDTH // 2, HEIGHT // 2 + i * 30))  # Adjust vertical position
+        text_surface = tip_font.render(
+            line, True, (255, 255, 255))  # White text
+        text_rect = text_surface.get_rect(
+            # Adjust vertical position
+            center=(WIDTH // 2, HEIGHT // 2 + i * 30))
         screen.blit(text_surface, text_rect)
 
     pygame.display.flip()  # Update the display
@@ -57,6 +62,7 @@ def display_credits():
                 if event.key == pygame.K_ESCAPE:  # Allow back navigation with Escape key
                     return  # Exit to main menu
 
+
 def start_menu():
     my_theme = pygame_menu.themes.Theme(
         widget_font=font_path,
@@ -68,11 +74,13 @@ def start_menu():
         background_color=(0, 0, 0)  # Black background
     )
 
-    menu = pygame_menu.Menu(title='/////', width=WIDTH, height=HEIGHT, theme=my_theme)
+    menu = pygame_menu.Menu(title='/////', width=WIDTH,
+                            height=HEIGHT, theme=my_theme)
 
-    menu.add.label(title="Bienvenido a Recycled Space!", font_size=36, font_color=(255, 215, 0), margin=(20, 20))
+    menu.add.label(title="Bienvenido a Recycled Space!",
+                   font_size=36, font_color=(255, 215, 0), margin=(20, 20))
 
-    menu.add.button('Empezar juego', main.mainGame)  # Start the main game loop
+    menu.add.button('Empezar juego', mainGame)  # Start the main game loop
 
     menu.add.button('Creditos', display_credits)
 

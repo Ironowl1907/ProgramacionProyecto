@@ -4,10 +4,8 @@ import enemy as enemy
 import conf as conf
 from enemy import Enemy
 import input as input
-import sys
 import player as player
 import ui as ui
-import MENUs
 
 # Initialize pygame
 pygame.init()
@@ -19,6 +17,15 @@ background = pygame.image.load("../res/Background.png")
 
 
 def mainGame():
+
+    # Initialize pygame
+    pygame.init()
+
+    # Create a window
+    screen = pygame.display.set_mode((conf.WIDTH, conf.HEIGHT))
+    pygame.display.set_caption("Avion de basura (que se yo)")
+    background = pygame.image.load("../res/Background.png")
+
     pygame.mixer.init()
     pygame.mixer.music.load("../res/music.mp3")
     pygame.mixer.music.set_volume(0.2)
@@ -47,6 +54,8 @@ def mainGame():
     clock = pygame.time.Clock()
     running = True
 
+    print("Entered while")
+
     while running:
         deltaTime = clock.tick(conf.FPS) / 1000
         if len(enemiesGroup) == 0:
@@ -60,7 +69,7 @@ def mainGame():
         # Handle events
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                MENUs.startMenu
+                exit()
 
         # Handle Input
         input.getInput(mainPlayer, projectilesGroup, deltaTime)
@@ -102,5 +111,5 @@ def mainGame():
         pygame.display.flip()
 
 
-if __name__ == "__main__":
-    mainGame()
+# if __name__ == "__main__":
+#     mainGame()
