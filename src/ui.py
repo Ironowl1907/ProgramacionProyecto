@@ -2,6 +2,7 @@ import pygame
 from pygame.math import Vector2
 from pygame.surface import Surface
 from pygame.transform import scale
+from DRAFTS import DRAFT_TIP as tips
 from player import Player
 from proyectile_system import ProjectileType
 import conf as conf
@@ -22,6 +23,9 @@ class Ui:
             "../res/Player/Player_Items/Player_Web_Item.png", (50, 50))
         self.noImg = self._load_and_scale_image(
             "../res/ui/no_weapon.png", (50, 50))
+
+        self.lastTip = 0
+        self.showingTip = True
 
     def _load_and_scale_image(self, path: str, size: tuple[int, int]) -> pygame.Surface:
         try:
@@ -46,8 +50,15 @@ class Ui:
                 selected = self.noImg
         surface.blit(selected, (position.x, position.y))
 
-    def _drawRemainingLive(self, position: Vector2, surface: Surface):
-        pass
+    def _drawNewTip(self, position: Vector2, surface: Surface):
+        font = pygame.font.SysFont(None, 30)
+        score_text = font.render(
+            f"{tips.tips[self.lastTip]}", True, (255, 255, 255))
+        surface.blit(score_text, (position.x -
+                     score_text.get_width()//2, position.y))
+
+    def newTip(self):
+        self.lastTip = self.lastTip % (len(tips.tips)-1) + 1
 
     def _drawKilledEnemies(self, position: Vector2, surface: Surface):
         font = pygame.font.SysFont(None, 40)
@@ -57,7 +68,11 @@ class Ui:
 
     def draw(self, surface: pygame.Surface):
         selected_weapon_type = self.player.actualWeapon
-        self._drawSelectedWeapon(
-            Vector2(self.position.x / 8, self.position.y), selected_weapon_type, surface)
-        self._drawKilledEnemies(
-            Vector2(self.position.x + self.position.x * 2/3, self.position.y), surface)
+        if not self.showingTip:
+            self._drawSelectedWeapon(
+                Vector2(self.position.x / 8, self.position.y), selected_weapon_type, surface)
+            self._drawKilledEnemies(
+                Vector2(self.position.x + self.position.x * 2/3, self.position.y), surface)
+        else:
+            self._drawNewTip(
+                Vector2(self.position.x, self.position.y), surface)

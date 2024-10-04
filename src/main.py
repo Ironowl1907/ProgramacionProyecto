@@ -47,7 +47,11 @@ def mainGame():
 
     while running:
         deltaTime = clock.tick(conf.FPS) / 1000
-        spawnTimeCounter += deltaTime
+        if len(enemiesGroup) == 0:
+            spawnTimeCounter += deltaTime
+            mainUi.showingTip = True
+        else:
+            mainUi.showingTip = False
 
         # Handle events
         for event in pygame.event.get():
