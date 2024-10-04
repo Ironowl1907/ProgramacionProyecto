@@ -50,6 +50,8 @@ def mainGame():
     while running:
         deltaTime = clock.tick(conf.FPS) / 1000
         if len(enemiesGroup) == 0:
+            if mainUi.showingTip == False:
+                mainUi.newTip()
             spawnTimeCounter += deltaTime
             mainUi.showingTip = True
         else:
