@@ -18,6 +18,10 @@ background = pygame.image.load("../res/Background.png")
 
 
 def mainGame():
+    pygame.mixer.init()
+    pygame.mixer.load("../res/music.mp3")
+    pygame.mixer.music.play()
+
     # Proyectile list instance
     projectilesGroup = pygame.sprite.Group()
 
