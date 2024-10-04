@@ -7,6 +7,7 @@ import input as input
 import sys
 import player as player
 import ui as ui
+import MENUs
 
 # Initialize pygame
 pygame.init()
@@ -19,7 +20,8 @@ background = pygame.image.load("../res/Background.png")
 
 def mainGame():
     pygame.mixer.init()
-    pygame.mixer.load("../res/music.mp3")
+    pygame.mixer.music.load("../res/music.mp3")
+    pygame.mixer.music.set_volume(0.2)
     pygame.mixer.music.play()
 
     # Proyectile list instance
@@ -56,8 +58,7 @@ def mainGame():
         # Handle events
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
+                MENUs.startMenu
 
         # Handle Input
         input.getInput(mainPlayer, projectilesGroup, deltaTime)
