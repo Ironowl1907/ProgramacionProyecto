@@ -14,10 +14,10 @@ def draw_progress_bar(position: Vector2, state, surface):
     """
 
     # Draw the background (empty part)
-    pygame.draw.rect(surface, conf.RED,
+    pygame.draw.rect(surface, (150, 150, 150),
                      (position.x - conf.KILLBARWIDTH/2, position.y, conf.KILLBARWIDTH, conf.KILLBARHEIGHT))
 
     # Draw the filled part based on the state (foreground)
     current_width = conf.KILLBARWIDTH * state
-    pygame.draw.rect(surface, conf.GREEN,
+    pygame.draw.rect(surface, (255, 255, 255),
                      (position.x - conf.KILLBARWIDTH/2, position.y, current_width, conf.KILLBARHEIGHT))
