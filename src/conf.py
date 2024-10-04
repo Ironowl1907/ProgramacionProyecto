@@ -14,6 +14,13 @@ SAWSPEED = 10
 PROJECTILE_SPEED = 10
 PROJECTILE_COOLDOWN = 0.5
 CHANGEWEAPONCOOLDOWN = 0.2
+PROJECTILE_VOLUME = 0.2
+
+# Sounds Paths
+MUSIC = "../res/Sounds/music.mp3"
+BASIC_PROJECTILE_SOUND = "../res/Sounds/laser.mp3"
+NET_PROJECTILE_SOUND = "../res/Sounds/rope.mp3"
+SAW_PROJECTILE_SOUND = "../res/Sounds/saw.mp3"
 
 # Enemy
 ROTATION_SPEED = 200

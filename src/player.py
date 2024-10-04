@@ -3,6 +3,8 @@ from pygame.sprite import Group
 import conf
 import pygame
 
+from src.proyectile_system import ProjectileType
+
 # Player class
 
 weaponList = [proy.ProjectileType.BASIC,
@@ -83,7 +85,18 @@ class Player(pygame.sprite.Sprite):
         surface.blit(rotated_image, rotated_rect)
 
     def shoot(self, projectileGroup: Group):
+
         if self.lastShot >= conf.PROJECTILE_COOLDOWN:
+            if self.actualWeapon == ProjectileType.BASIC or self.actualWeapon == ProjectileType.LASER:
+                projectile_sound = pygame.mixer.Sound(conf.BASIC_PROJECTILE_SOUND)
+                projectile_sound.set_volume(conf.PROJECTILE_VOLUME)
+                projectile_sound.play()
+            elif self.actualWeapon == ProjectileType.NET:
+                projectile_sound = pygame.mixer.Sound(conf.NET_PROJECTILE_SOUND)
+                projectile_sound.play()
+            else:
+                projectile_sound = pygame.mixer.Sound(conf.SAW_PROJECTILE_SOUND)
+                projectile_sound.play()
             direction = pygame.Vector2(0, -1).rotate(self.rotatingAngle)
 
             front_position = self.position + \

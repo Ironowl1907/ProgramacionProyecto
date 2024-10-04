@@ -27,7 +27,7 @@ def mainGame():
     background = pygame.image.load("../res/Background.png")
 
     pygame.mixer.init()
-    pygame.mixer.music.load("../res/music.mp3")
+    pygame.mixer.music.load(conf.MUSIC)
     pygame.mixer.music.set_volume(0.2)
     pygame.mixer.music.play()
 
