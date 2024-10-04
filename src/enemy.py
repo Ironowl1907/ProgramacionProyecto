@@ -112,8 +112,10 @@ class Enemy(pygame.sprite.Sprite):
             self.despawnLeftTime = conf.AFTERKILLTIME
 
     def shoot(self, projectileGroup: Group):
+        projectile_sound = pygame.mixer.Sound(conf.BASIC_PROJECTILE_SOUND)
+        projectile_sound.set_volume(conf.PROJECTILE_VOLUME)
+        projectile_sound.play()
         direction = pygame.Vector2(0, 1).rotate(self.rotatingAngle)
-
         front_position = self.position + direction * (self.rect.height / 2)
 
         projectile = proy.Projectile(
