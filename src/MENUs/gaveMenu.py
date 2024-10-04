@@ -1,11 +1,7 @@
 import pygame
 import pygame_menu
 import sys
-
-from pygame.examples.cursors import image
-
-import main
-from src.upgrades import weapons_upgrades
+from src.main import mainGame
 
 # Constants
 WIDTH, HEIGHT = 800, 600
@@ -17,7 +13,7 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Game Tips")
 
 # Load Minecraft Font
-font_path = r"../res/Fonts/Minecraftia-Regular.ttf"
+font_path = r"../../res/Fonts/Minecraftia-Regular.ttf"
 
 # Main font for menu and upgrades
 minecraft_font = pygame.font.Font(font_path, 36)
@@ -74,11 +70,10 @@ def start_menu():
 
     menu = pygame_menu.Menu(title='/////', width=WIDTH, height=HEIGHT, theme=my_theme)
 
-    menu.add.label(title="Bienvenido a Recycled Space!", font_size=36, font_color=(255, 215, 0), margin=(20, 20))
+    menu.add.label(title="Desca", font_size=36, font_color=(255, 215, 0), margin=(20, 20))
 
-    menu.add.button('Empezar juego', main.mainGame)  # Start the main game loop
 
-    menu.add.button('Creditos', display_credits)
+    menu.add.button('Seguir el juego', mainGame)  # Start the main game loop
 
     menu.add.button('Salir', pygame_menu.events.EXIT)
 
