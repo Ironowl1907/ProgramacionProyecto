@@ -1,7 +1,7 @@
 import pygame
 import pygame_menu
 import sys
-import src.main
+from src import main
 
 # Constants
 WIDTH, HEIGHT = 800, 600
@@ -72,7 +72,7 @@ def start_menu():
 
     menu.add.label(title="Bienvenido a Recycled Space!", font_size=36, font_color=(255, 215, 0), margin=(20, 20))
 
-    menu.add.button('Empezar juego', src.main.mainGame)  # Start the main game loop
+    menu.add.button('Empezar juego', main.mainGame)  # Start the main game loop
 
     menu.add.button('Creditos', display_credits)
 
