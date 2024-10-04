@@ -49,15 +49,15 @@ def mainGame():
     waveNumber = 0
     baseEnemyCount = 2
     spawnInterval = 10
+    startCooldown = 2
 
     # Main game loop
     clock = pygame.time.Clock()
     running = True
 
-    print("Entered while")
-
     while running:
         deltaTime = clock.tick(conf.FPS) / 1000
+        startCooldown -= deltaTime
         if len(enemiesGroup) == 0:
             if mainUi.showingTip == False:
                 mainUi.newTip()
@@ -85,7 +85,8 @@ def mainGame():
 
             # Spawn enemies for this wave
             for _ in range(enemiesInWave):
-                constr.spawnEnemy(enemiesGroup, projectilesGroup)
+                if startCooldown <= 0:
+                    constr.spawnEnemy(enemiesGroup, projectilesGroup)
 
         # Update game objects
         for projectile in projectilesGroup:
