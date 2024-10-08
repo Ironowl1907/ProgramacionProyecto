@@ -3,7 +3,7 @@ from pygame.sprite import Group
 import conf
 import pygame
 
-from src.proyectile_system import ProjectileType
+from proyectile_system import ProjectileType
 
 # Player class
 

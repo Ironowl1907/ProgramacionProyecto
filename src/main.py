@@ -12,7 +12,7 @@ pygame.init()
 
 # Create a window
 screen = pygame.display.set_mode((conf.WIDTH, conf.HEIGHT))
-pygame.display.set_caption("Avion de basura (que se yo)")
+pygame.display.set_caption("AstroScraps!")
 background = pygame.image.load("../res/Background.png")
 
 
@@ -23,7 +23,7 @@ def mainGame():
 
     # Create a window
     screen = pygame.display.set_mode((conf.WIDTH, conf.HEIGHT))
-    pygame.display.set_caption("Avion de basura (que se yo)")
+    pygame.display.set_caption("AstroScraps")
     background = pygame.image.load("../res/Background.png")
 
     pygame.mixer.init()

@@ -63,7 +63,7 @@ class Ui:
     def _drawKilledEnemies(self, position: Vector2, surface: Surface):
         font = pygame.font.SysFont(None, 40)
         score_text = font.render(
-            f"Score: {self.player.killedEnemies}", True, (255, 255, 255))
+            f"Scraps: {self.player.killedEnemies}", True, (255, 215, 0))
         surface.blit(score_text, (position.x, position.y))
 
     def draw(self, surface: pygame.Surface):
