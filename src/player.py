@@ -22,7 +22,7 @@ class Player(pygame.sprite.Sprite):
         self.original_shield = pygame.image.load(
             "../res/Player/Player_Items/Player_Shield.png")
         self.image = pygame.transform.scale(
-            self.original_image, (50, 75))
+            self.original_image, (50, 60))
         self.shield = pygame.transform.scale(
             self.original_shield, (80, 80))
         self.rect = self.image.get_rect(center=self.position)
@@ -47,7 +47,6 @@ class Player(pygame.sprite.Sprite):
         if self.changeWeaponCooldown >= conf.CHANGEWEAPONCOOLDOWN:
             self.actualWeapon = (self.actualWeapon - 1) % len(weaponList)
             self.changeWeaponCooldown = 0
-
 
     def update(self, deltaTime: float):
         self.lastShot += deltaTime
@@ -94,14 +93,17 @@ class Player(pygame.sprite.Sprite):
 
         if self.lastShot >= conf.PROJECTILE_COOLDOWN:
             if self.actualWeapon == ProjectileType.BASIC:
-                projectile_sound = pygame.mixer.Sound(conf.BASIC_PROJECTILE_SOUND)
+                projectile_sound = pygame.mixer.Sound(
+                    conf.BASIC_PROJECTILE_SOUND)
                 projectile_sound.set_volume(conf.PROJECTILE_VOLUME)
                 projectile_sound.play()
             elif self.actualWeapon == ProjectileType.NET:
-                projectile_sound = pygame.mixer.Sound(conf.NET_PROJECTILE_SOUND)
+                projectile_sound = pygame.mixer.Sound(
+                    conf.NET_PROJECTILE_SOUND)
                 projectile_sound.play()
             else:
-                projectile_sound = pygame.mixer.Sound(conf.SAW_PROJECTILE_SOUND)
+                projectile_sound = pygame.mixer.Sound(
+                    conf.SAW_PROJECTILE_SOUND)
                 projectile_sound.play()
             direction = pygame.Vector2(0, -1).rotate(self.rotatingAngle)
 
