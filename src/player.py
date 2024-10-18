@@ -8,7 +8,7 @@ from proyectile_system import ProjectileType
 # Player class
 
 weaponList = [proy.ProjectileType.BASIC,
-              proy.ProjectileType.SAW, proy.ProjectileType.LASER, proy.ProjectileType.NET]
+              proy.ProjectileType.SAW, proy.ProjectileType.NET]
 
 
 class Player(pygame.sprite.Sprite):
@@ -42,6 +42,12 @@ class Player(pygame.sprite.Sprite):
         if self.changeWeaponCooldown >= conf.CHANGEWEAPONCOOLDOWN:
             self.actualWeapon = (self.actualWeapon + 1) % len(weaponList)
             self.changeWeaponCooldown = 0
+
+    def previousWeapon(self):
+        if self.changeWeaponCooldown >= conf.CHANGEWEAPONCOOLDOWN:
+            self.actualWeapon = (self.actualWeapon - 1) % len(weaponList)
+            self.changeWeaponCooldown = 0
+
 
     def update(self, deltaTime: float):
         self.lastShot += deltaTime
@@ -87,7 +93,7 @@ class Player(pygame.sprite.Sprite):
     def shoot(self, projectileGroup: Group):
 
         if self.lastShot >= conf.PROJECTILE_COOLDOWN:
-            if self.actualWeapon == ProjectileType.BASIC or self.actualWeapon == ProjectileType.LASER:
+            if self.actualWeapon == ProjectileType.BASIC:
                 projectile_sound = pygame.mixer.Sound(conf.BASIC_PROJECTILE_SOUND)
                 projectile_sound.set_volume(conf.PROJECTILE_VOLUME)
                 projectile_sound.play()

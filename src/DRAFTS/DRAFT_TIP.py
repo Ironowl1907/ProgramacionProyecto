@@ -1,5 +1,5 @@
 tips = [
-    " Separa tus residuos en casa: plásticos, papel, vidrio y orgánicos.",
+    "Separa tus residuos en casa: plásticos, papel, vidrio y orgánicos.",
     "Limpia los envases antes de reciclarlos para evitar contaminaciones.",
     "Infórmate sobre las normas de reciclaje en tu localidad.",
     "Reutiliza envases y bolsas siempre que sea posible.",

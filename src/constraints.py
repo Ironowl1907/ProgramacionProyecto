@@ -30,16 +30,19 @@ def checkCollisions(main_player: player.Player, enemy_group: Group, projectile_g
                 continue
 
             if projectile.projType == ProjectileType.SAW:
-                current_enemy.kill()
-                projectile.randDir()
-            elif projectile.projType == ProjectileType.NET and current_enemy.killed:
-                main_player.killedEnemies += 1
-                projectile_group.remove(projectile)
-                enemy_group.remove(current_enemy)
-
+                current_enemy.kill()  # Marca al enemigo como destruido
+                projectile_group.remove(projectile)  # Elimina el proyectil
+            elif projectile.projType == ProjectileType.NET:
+                if current_enemy.killed:  # Solo si el enemigo ya fue destruido
+                    main_player.killedEnemies += 1
+                    projectile_group.remove(projectile)  # Elimina la red
+                    enemy_group.remove(current_enemy)  # Elimina el enemigo
+                else:
+                    # Si el enemigo no estaba destruido, se podría hacer otra acción o ignorar
+                    continue
             else:
-                projectile_group.remove(projectile)
-                current_enemy.kill()
+                projectile_group.remove(projectile)  # Elimina el proyectil
+                current_enemy.kill()  # Marca al enemigo como destruido
 
 
 def spawnEnemy(enemy_group: Group, projectile_group: Group):

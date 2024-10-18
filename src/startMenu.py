@@ -15,9 +15,12 @@ pygame.display.set_caption("AstroScraps")
 # Load Minecraft Font
 font_path = r"../res/Fonts/Minecraftia-Regular.ttf"
 
+# Load the background image
+background_image = pygame.image.load("../res/Background.png").convert()
+
 # Main font for menu and upgrades
-minecraft_font = pygame.font.Font(font_path, 36)
-tip_font = pygame.font.Font(font_path, 16)  # Smaller font for tips
+minecraft_font = pygame.font.Font(font_path, 50)
+tip_font = pygame.font.Font(font_path, 20)  # Smaller font for tips
 
 
 # Function to display credits
@@ -32,8 +35,8 @@ def display_credits():
         "Press ESC to return to the main menu"
     ]
 
-    # Clear screen with black background
-    screen.fill((0, 0, 0))
+    # Clear screen with background image
+    screen.blit(background_image, (0, 0))
 
     # Render title
     title_surface = minecraft_font.render(
@@ -45,9 +48,8 @@ def display_credits():
     # Render each line of credits
     for i, line in enumerate(credits_text):
         text_surface = tip_font.render(
-            line, True, (255, 255, 255))  # White text
+            line, True, (153, 229, 80))
         text_rect = text_surface.get_rect(
-            # Adjust vertical position
             center=(WIDTH // 2, HEIGHT // 2 + i * 30))
         screen.blit(text_surface, text_rect)
 
@@ -64,30 +66,74 @@ def display_credits():
                     return  # Exit to main menu
 
 
+# Function to display Player_tutorial sprite with "How to Play" title and background
+def display_how_to_play():
+    # Load the Player_tutorial sprite
+    player_sprite = pygame.image.load("../res/Player/Player_tutorial.png")
+
+    # Set the new size (for example, 127x87 scaled by 4)
+    new_width, new_height = 127 * 4, 87 * 4
+    player_sprite = pygame.transform.scale(player_sprite, (new_width, new_height))
+
+    # Get the rect for the resized sprite and center it
+    player_rect = player_sprite.get_rect(center=(WIDTH // 2, (HEIGHT // 2) + 50))  # Centered on screen
+
+    # Clear screen with the background image
+    screen.blit(background_image, (0, 0))  # Background fills the screen
+
+    # Render "How to Play" title
+    title_surface = minecraft_font.render("How to Play", True, (255, 215, 0))  # Gold color
+    title_rect = title_surface.get_rect(center=(WIDTH // 2, HEIGHT // 7))  # Position near the top
+    screen.blit(title_surface, title_rect)
+
+    # Render the Player_tutorial sprite
+    screen.blit(player_sprite, player_rect)
+
+    pygame.display.flip()  # Update the display
+
+    # Wait for player input to return
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:  # Allow back navigation with Escape key
+                    return  # Exit to main menu
+
+
 def start_menu():
+    # Clear the screen with the background image
+    screen.blit(background_image, (0, 0))  # Fill with the background image
+
     my_theme = pygame_menu.themes.Theme(
         widget_font=font_path,
         title_font=font_path,
-        widget_font_size=24,
-        title_font_size=30,
-        widget_font_color=(255, 255, 255),
+        widget_font_size=20,
+        title_font_size=50,
+        widget_font_color=(153, 229, 80),
         title_font_color=(255, 215, 0),  # Gold color for title
-        background_color=(0, 0, 0)  # Black background
+        background_color=(0, 0, 0, 0)  # Set to transparent background to allow bgfun to work
     )
 
     menu = pygame_menu.Menu(title='/////', width=WIDTH,
                             height=HEIGHT, theme=my_theme)
 
-    menu.add.label( title = "AstroScraps!",
-                   font_size = 50, font_color = (255, 215, 0), margin = (20, 20))
+    # Position the title label correctly
+    menu.add.label(title="AstroScraps!",
+                   font_size=50, font_color=(255, 215, 0), margin=(20, 20))
 
-    menu.add.button('Empezar juego', mainGame)  # Start the main game loop
+    menu.add.button('Start Game', mainGame)  # Start the main game loop
 
-    menu.add.button('Creditos', display_credits)
+    menu.add.button('How to Play?', display_how_to_play)
 
-    menu.add.button('Salir', pygame_menu.events.EXIT)
+    menu.add.button('Credits', display_credits)
 
-    menu.mainloop(screen)
+    menu.add.button('Exit', pygame_menu.events.EXIT)
+
+    # Use bgfun to continuously display the background image during the menu loop
+    menu.mainloop(screen, bgfun=lambda: screen.blit(background_image, (0, 0)))
+
 
 if __name__ == "__main__":
     start_menu()
