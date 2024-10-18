@@ -5,7 +5,6 @@ from pygame.transform import scale
 from DRAFTS import DRAFT_TIP as tips
 from player import Player
 from proyectile_system import ProjectileType
-import conf as conf
 
 
 class Ui:
@@ -27,7 +26,7 @@ class Ui:
         # Trash_coin Sprite
         self.trash_coin = self._load_and_scale_image(
             "../res/ui/Trash_coin.png", (25, 25))
-        
+
         self.lastTip = 0
         self.showingTip = True
 

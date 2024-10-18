@@ -1,8 +1,6 @@
 import pygame
 import constraints as constr
-import enemy as enemy
 import conf as conf
-from enemy import Enemy
 import input as input
 import player as player
 import ui as ui
