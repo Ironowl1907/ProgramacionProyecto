@@ -22,6 +22,9 @@ BASIC_PROJECTILE_SOUND = "../res/Sounds/laser.mp3"
 NET_PROJECTILE_SOUND = "../res/Sounds/rope.mp3"
 SAW_PROJECTILE_SOUND = "../res/Sounds/saw.mp3"
 
+# Running state
+RUNNING = False
+
 # Enemy
 ROTATION_SPEED = 200
 ENEMY_SPEED = 3

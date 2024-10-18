@@ -1,4 +1,3 @@
-import pygame
 import random as rand
 from pygame.sprite import Group
 import player
@@ -14,14 +13,15 @@ def checkCollisions(main_player: player.Player, enemy_group: Group, projectile_g
             continue
         if main_player.rect.colliderect(current_enemy.rect):
             print("Game Over: Player crashed with enemy")
-            exit()
+            conf.RUNNING = False
 
     # Projectile collisions
     for projectile in projectile_group:
         if projectile.projType == ProjectileType.BASICENEMY and not main_player.inmortal:
             if projectile.rect.colliderect(main_player.rect):
-                print(f"Game Over: Player hit by projectile: {int(projectile.projType)}")
-                exit()
+                print(f"Game Over: Player hit by projectile: {
+                      int(projectile.projType)}")
+                conf.RUNNING = False
 
         for current_enemy in enemy_group:
             if projectile.projType == ProjectileType.BASICENEMY:

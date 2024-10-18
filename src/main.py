@@ -53,13 +53,13 @@ def mainGame():
 
     # Main game loop
     clock = pygame.time.Clock()
-    running = True
+    conf.RUNNING = True
 
-    while running:
+    while conf.RUNNING:
         deltaTime = clock.tick(conf.FPS) / 1000
         startCooldown -= deltaTime
         if len(enemiesGroup) == 0:
-            if mainUi.showingTip == False:
+            if not mainUi.showingTip:
                 mainUi.newTip()
             spawnTimeCounter += deltaTime
             mainUi.showingTip = True
@@ -112,5 +112,5 @@ def mainGame():
         pygame.display.flip()
 
 
-# if __name__ == "__main__":
-#     mainGame()
+if __name__ == "__main__":
+    mainGame()
