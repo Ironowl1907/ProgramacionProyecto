@@ -1,4 +1,4 @@
-# Avión de Basura (Que se yo)
+# Astroscrap
 
 This project is a simple 2D game created using Pygame, where the player controls a spaceship and must navigate through enemies while avoiding collisions. The game features a projectile system, enemies that shoot back, and a main menu with interactive buttons.
 
